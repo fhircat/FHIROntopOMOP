@@ -1,0 +1,196 @@
+@prefix fhir:  <http://hl7.org/fhir/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix w5:    <http://hl7.org/fhir/w5#> .
+
+w5:individual  a         owl:Class ;
+        rdfs:subClassOf  w5:administrative .
+
+w5:when.recorded  a         owl:ObjectProperty ;
+        rdfs:comment        "when this resource itself was created" ;
+        rdfs:label          "when.recorded" ;
+        rdfs:subPropertyOf  w5:when .
+
+w5:terminology  a        owl:Class ;
+        rdfs:subClassOf  w5:conformance .
+
+w5:id.version  a            owl:ObjectProperty ;
+        rdfs:comment        "Identifier for this version" ;
+        rdfs:label          "id.version" ;
+        rdfs:subPropertyOf  w5:id .
+
+w5:when.planned  a          owl:ObjectProperty ;
+        rdfs:comment        "when this resource is planned to occur" ;
+        rdfs:label          "when.planned" ;
+        rdfs:subPropertyOf  w5:when .
+
+w5:encounter  a          owl:Class ;
+        rdfs:subClassOf  w5:workflow .
+
+w5:order  a              owl:Class ;
+        rdfs:subClassOf  w5:workflow .
+
+w5:information  a        owl:Class ;
+        rdfs:subClassOf  w5:infrastructure .
+
+w5:     a                owl:Ontology ;
+        rdfs:comment     "FHIR W5 categorization is a preliminary classification of the fhir property" ;
+        rdfs:label       "W5 Categorization" ;
+        owl:versionIRI   "http://build.fhir.org/w5.ttl" ;
+        owl:versionInfo  "FHIR W5 categorization (Preliminary)" .
+
+w5:who  a             owl:ObjectProperty ;
+        rdfs:comment  "An actor involved in the work described by this resource" ;
+        rdfs:label    "who" .
+
+w5:structure  a          owl:Class ;
+        rdfs:subClassOf  w5:infrastructure .
+
+w5:class  a           owl:ObjectProperty ;
+        rdfs:comment  "Classifier Field" ;
+        rdfs:label    "class" .
+
+w5:content  a            owl:Class ;
+        rdfs:subClassOf  w5:conformance .
+
+w5:when.init  a             owl:ObjectProperty ;
+        rdfs:comment        "when the work described in this resource was started (or will be)" ;
+        rdfs:label          "when.init" ;
+        rdfs:subPropertyOf  w5:when .
+
+w5:general  a            owl:Class ;
+        rdfs:subClassOf  w5:clinical .
+
+w5:who.witness  a           owl:ObjectProperty ;
+        rdfs:comment        "who attests to the content of the resource (individual or org)" ;
+        rdfs:label          "who.witness" ;
+        rdfs:subPropertyOf  w5:who .
+
+w5:conformance  a     owl:Class ;
+        rdfs:comment  "Conformance Resources" ;
+        rdfs:label    "conformance" .
+
+w5:documents  a          owl:Class ;
+        rdfs:subClassOf  w5:infrastructure .
+
+w5:misc  a               owl:Class ;
+        rdfs:subClassOf  w5:conformance .
+
+w5:who.source  a            owl:ObjectProperty ;
+        rdfs:comment        "Who provided the information in this resource" ;
+        rdfs:label          "who.source" ;
+        rdfs:subPropertyOf  w5:who .
+
+w5:why  a             owl:ObjectProperty ;
+        rdfs:comment  "Why this work was done" ;
+        rdfs:label    "why" .
+
+w5:where  a           owl:ObjectProperty ;
+        rdfs:comment  "The location of the work described" ;
+        rdfs:label    "where" .
+
+w5:billing  a            owl:Class ;
+        rdfs:subClassOf  w5:financial .
+
+w5:who.focus  a             owl:ObjectProperty ;
+        rdfs:comment        "Who this resource is about" ;
+        rdfs:label          "who.focus" ;
+        rdfs:subPropertyOf  w5:who .
+
+w5:clinical  a        owl:Class ;
+        rdfs:comment  "Clinical Resources" ;
+        rdfs:label    "clinical" .
+
+w5:medication  a         owl:Class ;
+        rdfs:subClassOf  w5:clinical .
+
+w5:scheduling  a         owl:Class ;
+        rdfs:subClassOf  w5:workflow .
+
+w5:behavior  a           owl:Class ;
+        rdfs:subClassOf  w5:conformance .
+
+w5:diagnostics  a        owl:Class ;
+        rdfs:subClassOf  w5:clinical .
+
+w5:administrative  a  owl:Class ;
+        rdfs:comment  "Administrative Resources" ;
+        rdfs:label    "administrative" .
+
+w5:context  a         owl:ObjectProperty ;
+        rdfs:comment  "a resource that gives context for the work described in this resource (usually Encounter or EpisodeOfCare)" ;
+        rdfs:label    "context" .
+
+w5:exchange  a           owl:Class ;
+        rdfs:subClassOf  w5:infrastructure .
+
+w5:payment  a            owl:Class ;
+        rdfs:subClassOf  w5:financial .
+
+w5:id   a             owl:ObjectProperty ;
+        rdfs:comment  "Business Identifier" ;
+        rdfs:label    "id" .
+
+w5:what  a            owl:ObjectProperty ;
+        rdfs:comment  "what this resource is about" ;
+        rdfs:label    "what" .
+
+w5:entity  a             owl:Class ;
+        rdfs:subClassOf  w5:administrative .
+
+w5:infrastructure  a  owl:Class ;
+        rdfs:comment  "Infrastructural Resources" ;
+        rdfs:label    "infrastructure" .
+
+w5:other  a              owl:Class ;
+        rdfs:subClassOf  w5:financial .
+
+w5:workflow  a        owl:Class ;
+        rdfs:comment  "Workflow Resources" ;
+        rdfs:label    "workflow" .
+
+w5:who.cause  a             owl:ObjectProperty ;
+        rdfs:comment        "who prompted the work described in the resource" ;
+        rdfs:label          "who.cause" ;
+        rdfs:subPropertyOf  w5:who .
+
+w5:device  a             owl:Class ;
+        rdfs:subClassOf  w5:administrative .
+
+w5:grade  a           owl:ObjectProperty ;
+        rdfs:comment  "A field that indicates the potential impact of the content of the resource" ;
+        rdfs:label    "grade" .
+
+w5:careprovision  a      owl:Class ;
+        rdfs:subClassOf  w5:clinical .
+
+w5:when.done  a             owl:ObjectProperty ;
+        rdfs:comment        "when the work described in this resource was completed (or will be)" ;
+        rdfs:label          "when.done" ;
+        rdfs:subPropertyOf  w5:when .
+
+w5:support  a            owl:Class ;
+        rdfs:subClassOf  w5:financial .
+
+w5:status  a          owl:ObjectProperty ;
+        rdfs:comment  "Status Field" ;
+        rdfs:label    "status" .
+
+w5:financial  a       owl:Class ;
+        rdfs:comment  "Financial Resources" ;
+        rdfs:label    "financial" .
+
+w5:who.author  a            owl:ObjectProperty ;
+        rdfs:comment        "who authored the content of the resource" ;
+        rdfs:label          "who.author" ;
+        rdfs:subPropertyOf  w5:who .
+
+w5:group  a              owl:Class ;
+        rdfs:subClassOf  w5:administrative .
+
+w5:who.actor  a             owl:ObjectProperty ;
+        rdfs:comment        "who did the work described the resource (or will do)" ;
+        rdfs:label          "who.actor" ;
+        rdfs:subPropertyOf  w5:who .
