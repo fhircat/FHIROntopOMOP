@@ -1,7 +1,7 @@
 # FHIROntopOMOP
 FHIR Ontop OMOP Implementation
 
-== Installation Instruction ==
+## Installation Instruction
 
 * download the Ontop Command Line Interface at https://github.com/ontop/ontop/releases/download/ontop-4.1.0/ontop-cli-4.1.0.zip
 * unzip (into the folder of ontop-cli-4.1.0)
