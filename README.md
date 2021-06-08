@@ -7,4 +7,4 @@ FHIR Ontop OMOP Implementation
 * unzip (into the folder of ontop-cli-4.1.0)
 * copy the the folders of input and jdbc into the folder of ontop-cli-4.1.0
 * run $./ontop endpoint --ontology=input/fhir.ttl --mapping=input/fhir.obda --properties=input/fhir.properties
-* open browser http://localhost:8080/ see the Ontop SPARQL Endpoint
+* open a browser at http://localhost:8080/ to see the Ontop SPARQL Endpoint
