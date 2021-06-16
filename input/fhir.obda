@@ -9,20 +9,12 @@ obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
 
 [MappingDeclaration] @collection [[
-mappingId	Person-person_id1
-target		:Patient/{person_id} a :Patient ; :Resource.id _:Patient/{person_id}/id . 
-source		select * from "omop"."person"
-
-mappingId	Person-person_id2
-target		_:Patient/{person_id}/id :value {person_id}^^xsd:string . 
+mappingId	Person-person_id
+target		:Patient/{person_id} a :Patient ; :Resource.id _:Patient/{person_id}/id . _:Patient/{person_id}/id :value {person_id}^^xsd:string . 
 source		select * from "omop"."person"
 
 mappingId	Person-birthDate1
-target		:Patient/{person_id} :Patient.birthDate _:Patient/{person_id}/birthDate . 
-source		select * from "omop"."person"
-
-mappingId	Person-birthDate2
-target		_:Patient/{person_id}/birthDate :value {date}^^xsd:date . 
+target		:Patient/{person_id} :Patient.birthDate _:Patient/{person_id}/birthDate . _:Patient/{person_id}/birthDate :value {date}^^xsd:date . 
 source		select *, MAKE_DATE(year_of_birth, month_of_birth, day_of_birth) AS date from "omop"."person"
 
 mappingId	Person-birthDatetime1
@@ -62,19 +54,19 @@ target		_:Patient/{person_id}/gender :value "female"^^xsd:string .
 source		select * from "omop"."person" where "gender_source_value" LIKE 'F' or "gender_source_value" LIKE 'female'
 
 mappingId	ConditionOccurrence-id1
-target		:Condition/{condition_occurrence_id} a :Condition ; :Resource.id _:Condition/{condition_occurrence_id}/id . 
+target		:Condition/{condition_occurrence_id} a :Condition ; :Resource.id :Condition/{condition_occurrence_id}/id . 
 source		select * from "omop"."condition_occurrence"
 
 mappingId	ConditionOccurrence-id2
-target		_:Condition/{condition_occurrence_id}/id :value {condition_occurrence_id}^^xsd:string . 
+target		:Condition/{condition_occurrence_id}/id :value {condition_occurrence_id}^^xsd:string . 
 source		select * from "omop"."condition_occurrence"
 
 mappingId	ConditionOccurrence-code1
-target		_:Condition/{condition_occurrence_id} :Condition.code _:Condition/{condition_occurrence_id}/{condition_concept_id} . 
+target		:Condition/{condition_occurrence_id} :Condition.code :Condition/{condition_occurrence_id}/{condition_concept_id} . 
 source		select * from "omop"."condition_occurrence"
 
 mappingId	ConditionOccurrence-code2
-target		_:Condition/{condition_occurrence_id}/{condition_concept_id} :CodeableConcept.coding _:CodeableConcept.coding/{condition_concept_id} . 
+target		:Condition/{condition_occurrence_id}/{condition_concept_id} :CodeableConcept.coding :CodeableConcept.coding/{condition_concept_id} . 
 source		select * from "omop"."condition_occurrence"
 
 mappingId	ConditionOccurrence-type1

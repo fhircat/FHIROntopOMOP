@@ -38,7 +38,7 @@ SELECT DISTINCT ?patient ?code ?system ?display WHERE {
     ?condition a fhir:Condition .
  	?condition	fhir:Condition.subject	?patient .
 	?condition	fhir:Condition.code	[fhir:CodeableConcept.coding [ fhir:Coding.code	[ fhir:value	?code  ];  fhir:Coding.system	[ fhir:value	?system  ]; fhir:Coding.display	[ fhir:value	?display  ] ] ].
-#	FILTER (str(?code) = '129721000119106' || str(?code) = '140031000119103' || str(?code) = '145681000119101' || str(?code) = '14669001' || str(?code) = '200118004' || str(?code) = '236428007' || str(?code) = '236429004' || str(?code) = '236432001' || str(?code) = '307309005' || str(?code) = '36225005' || str(?code) = '423533009' || str(?code) = '429224003' || str(?code) = '429489008' || str(?code) = '430535006' || str(?code) = '722095005' || str(?code) = '722096006' || str(?code) = '722278006'  )
-#	FILTER (str(?system) = 'SNOMED' )
+	FILTER (str(?code) = '129721000119106' || str(?code) = '140031000119103' || str(?code) = '145681000119101' || str(?code) = '14669001' || str(?code) = '200118004' || str(?code) = '236428007' || str(?code) = '236429004' || str(?code) = '236432001' || str(?code) = '307309005' || str(?code) = '36225005' || str(?code) = '423533009' || str(?code) = '429224003' || str(?code) = '429489008' || str(?code) = '430535006' || str(?code) = '722095005' || str(?code) = '722096006' || str(?code) = '722278006'  )
+	FILTER (str(?system) = 'SNOMED' )
 
 }
