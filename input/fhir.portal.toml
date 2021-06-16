@@ -1,4 +1,4 @@
-title="FHIR/Ontop Demo"
+title="FHIR/OMOP VKG Demo"
 
 [[tabGroups]]
 
@@ -13,9 +13,9 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
 
 SELECT * WHERE {
-  ?sub a fhir:Patient .
-  ?sub fhir:Patient.gender [fhir:value ?gender ] .
-  ?sub fhir:Patient.birthDate [fhir:value ?birthDate ] .
+    ?sub a fhir:Patient .
+    ?sub fhir:Patient.gender    [   fhir:value ?gender      ] .
+    ?sub fhir:Patient.birthDate [   fhir:value ?birthDate   ] .
 } 
 LIMIT 10
 """
@@ -24,7 +24,6 @@ LIMIT 10
 
 name="Condition"
 query="""
-
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -32,14 +31,19 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
 
 SELECT DISTINCT ?patient ?code ?system ?display WHERE {
-
     ?condition a fhir:Condition .
  	?condition	fhir:Condition.subject	?patient .
-	?condition	fhir:Condition.code	[fhir:CodeableConcept.coding [ fhir:Coding.code	[ fhir:value	?code  ];  fhir:Coding.system	[ fhir:value	?system  ]; fhir:Coding.display	[ fhir:value	?display  ] ] ].
+	?condition	fhir:Condition.code	[
+	    fhir:CodeableConcept.coding [ 
+            fhir:Coding.code    [ fhir:value    ?code    ];  
+            fhir:Coding.system  [ fhir:value    ?system  ]; 
+            fhir:Coding.display [ fhir:value    ?display ] 
+	    ] 
+	].
 	FILTER (str(?code) = '129721000119106' || str(?code) = '140031000119103' || str(?code) = '145681000119101' || str(?code) = '14669001' || str(?code) = '200118004' || str(?code) = '236428007' || str(?code) = '236429004' || str(?code) = '236432001' || str(?code) = '307309005' || str(?code) = '36225005' || str(?code) = '423533009' || str(?code) = '429224003' || str(?code) = '429489008' || str(?code) = '430535006' || str(?code) = '722095005' || str(?code) = '722096006' || str(?code) = '722278006'  )
 	FILTER (str(?system) = 'SNOMED' )
-
 }
+LIMIT 100
 """
 
 [[tabGroups.tabs]]
@@ -52,13 +56,17 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
 
 SELECT DISTINCT ?code ?system ?display (count(?patient) as ?count) WHERE {
-
     ?condition a fhir:Condition .
  	?condition	fhir:Condition.subject	?patient .
-	?condition	fhir:Condition.code	[fhir:CodeableConcept.coding [ fhir:Coding.code	[ fhir:value	?code  ];  fhir:Coding.system	[ fhir:value	?system  ]; fhir:Coding.display	[ fhir:value	?display  ] ] ].
+	?condition	fhir:Condition.code	[
+	    fhir:CodeableConcept.coding [ 
+	        fhir:Coding.code	[ fhir:value	?code    ];  
+	        fhir:Coding.system	[ fhir:value	?system  ]; 
+	        fhir:Coding.display	[ fhir:value	?display ] 
+        ] 
+    ].
 	FILTER (str(?code) = '129721000119106' || str(?code) = '140031000119103' || str(?code) = '145681000119101' || str(?code) = '14669001' || str(?code) = '200118004' || str(?code) = '236428007' || str(?code) = '236429004' || str(?code) = '236432001' || str(?code) = '307309005' || str(?code) = '36225005' || str(?code) = '423533009' || str(?code) = '429224003' || str(?code) = '429489008' || str(?code) = '430535006' || str(?code) = '722095005' || str(?code) = '722096006' || str(?code) = '722278006'  )
 	FILTER (str(?system) = 'SNOMED' )
-
 } GROUP BY ?code ?system ?display ORDER BY ?count
 """
 
@@ -73,22 +81,32 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
 
 SELECT DISTINCT ?patient ?code ?system ?display WHERE {
-
 {
     ?condition a fhir:Condition .
  	?condition	fhir:Condition.subject	?patient .
-	?condition	fhir:Condition.code	[fhir:CodeableConcept.coding [ fhir:Coding.code	[ fhir:value	?code  ];  fhir:Coding.system	[ fhir:value	?system  ]; fhir:Coding.display	[ fhir:value	?display  ] ] ].
+	?condition	fhir:Condition.code	[
+	    fhir:CodeableConcept.coding [
+	        fhir:Coding.code	[ fhir:value	?code  ];  
+	        fhir:Coding.system	[ fhir:value	?system  ]; 
+	        fhir:Coding.display	[ fhir:value	?display  ] 
+        ] 
+    ].
 	FILTER (str(?code) = '1532007' || str(?code) = '195655000' || str(?code) = '195656004' || str(?code) = '195657008' || str(?code) = '195658003' || str(?code) = '195659006' || str(?code) = '195660001' || str(?code) = '195662009' || str(?code) = '232399005' || str(?code) = '232400003' || str(?code) = '363746003' || str(?code) = '40766000' || str(?code) = '43878008' || str(?code) = '58031004' || str(?code) = 'J02.0' || str(?code) = 'J02.8' || str(?code) = 'J02.9'  )
 	FILTER (str(?system) = 'SNOMED' || str(?system) = 'ICD10CM' )
-
 }
 UNION
 {
  	?condition a fhir:Condition .
     ?condition	fhir:Condition.subject	?patient .
-	?condition	fhir:Condition.code	[fhir:CodeableConcept.coding [ fhir:Coding.code	[ fhir:value	?code  ];  fhir:Coding.system	[ fhir:value	?system  ]; fhir:Coding.display	[ fhir:value	?display  ] ] ].	FILTER (str(?code) = '10629271000119107' || str(?code) = '17741008' || str(?code) = '195666007' || str(?code) = '195668008' || str(?code) = '195669000' || str(?code) = '195670004' || str(?code) = '195671000' || str(?code) = '195672007' || str(?code) = '195673002' || str(?code) = '195676005' || str(?code) = '195677001' || str(?code) = '302911003' || str(?code) = 'J03.00' || str(?code) = 'J03.01' || str(?code) = 'J03.80' || str(?code) = 'J03.81' || str(?code) = 'J03.90' || str(?code) = 'J03.91'  )
+	?condition	fhir:Condition.code	[
+	    fhir:CodeableConcept.coding [ 
+	        fhir:Coding.code	[ fhir:value	?code  ];  
+	        fhir:Coding.system	[ fhir:value	?system  ]; 
+	        fhir:Coding.display	[ fhir:value	?display  ] 
+        ] 
+    ].	
+    FILTER (str(?code) = '10629271000119107' || str(?code) = '17741008' || str(?code) = '195666007' || str(?code) = '195668008' || str(?code) = '195669000' || str(?code) = '195670004' || str(?code) = '195671000' || str(?code) = '195672007' || str(?code) = '195673002' || str(?code) = '195676005' || str(?code) = '195677001' || str(?code) = '302911003' || str(?code) = 'J03.00' || str(?code) = 'J03.01' || str(?code) = 'J03.80' || str(?code) = 'J03.81' || str(?code) = 'J03.90' || str(?code) = 'J03.91'  )
 	FILTER (str(?system) = 'SNOMED' || str(?system) = 'ICD10CM' )
-
 }
 }
 """
