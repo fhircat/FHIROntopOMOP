@@ -10,6 +10,7 @@ services:
 #      ONTOP_XML_CATALOG_FILE: /opt/ontop/input/catalog-v001.xml
       ONTOP_MAPPING_FILE: /opt/ontop/input/fhir.obda
       ONTOP_PROPERTIES_FILE: /opt/ontop/input/fhir.docker.properties
+      ONTOP_CONSTRAINT_FILE: /opt/ontop/input/fhir.db_prefs
       ONTOP_PORTAL_FILE: /opt/ontop/input/fhir.portal.toml      
       ONTOP_CORS_ALLOWED_ORIGINS: "*"
       ONTOP_DEV_MODE: "true"
