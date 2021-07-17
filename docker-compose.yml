@@ -1,0 +1,23 @@
+version: "3.4"
+
+services:
+  ontop:    
+#    env_file: .env
+    image: ontop/ontop-endpoint:latest
+    restart: unless-stopped
+    environment:
+      ONTOP_ONTOLOGY_FILE: /opt/ontop/input/fhir.ttl
+#      ONTOP_XML_CATALOG_FILE: /opt/ontop/input/catalog-v001.xml
+      ONTOP_MAPPING_FILE: /opt/ontop/input/fhir.obda
+      ONTOP_PROPERTIES_FILE: /opt/ontop/input/fhir.docker.properties
+      ONTOP_CONSTRAINT_FILE: /opt/ontop/input/fhir.db_prefs
+      ONTOP_PORTAL_FILE: /opt/ontop/input/fhir.portal.toml      
+      ONTOP_CORS_ALLOWED_ORIGINS: "*"
+      ONTOP_DEV_MODE: "true"
+    volumes:
+      - ./input:/opt/ontop/input
+      - ./jdbc:/opt/ontop/jdbc
+    ports:
+      - "8080:8080"
+
+    

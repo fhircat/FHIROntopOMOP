@@ -1,0 +1,4 @@
+omop.person:"person_id"
+omop.concept:"concept_id"
+omop.condition_occurrence:"condition_occurrence_id"
+omop.condition_occurrence:"person_id":omop.person:"person_id"
