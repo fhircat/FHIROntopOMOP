@@ -1,0 +1,482 @@
+@prefix : <http://hl7.org/fhir/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<urn:Person-person_id> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"person\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/Patient/{person_id}/id";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Resource.id
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "person_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate :value
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class :Patient;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}";
+      rr:termType rr:IRI
+    ], [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}/id";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Person-birthDate1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select *, MAKE_DATE(year_of_birth, month_of_birth, day_of_birth) AS date from \"omop\".\"person\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/Patient/{person_id}/birthDate";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Patient.birthDate
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "date";
+          rr:datatype xsd:date;
+          rr:termType rr:Literal
+        ];
+      rr:predicate :value
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}";
+      rr:termType rr:IRI
+    ], [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}/birthDate";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Person-birthDatetime1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"person\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/Patient/{person_id}/birthDate/Elementextension";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Element.extension
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}/birthDate";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Person-birthDatetime2> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"person\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/Patient/{person_id}/birthDate/Elementextension/url";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Extension.url
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}/birthDate/Elementextension";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Person-birthDatetime3> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"person\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:object "http://hl7.org/fhir/StructureDefinition/patient-birthTime";
+      rr:predicate :value
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}/birthDate/Elementextension/url";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Person-birthDatetime4> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"person\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/Patient/{person_id}/birthDate/Elementextension/valueDatetime";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Extension.valueDatetime
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}/birthDate/Elementextension";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Person-birthDatetime5> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"person\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "birth_datetime";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate :value
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}/birthDate/Elementextension/valueDatetime";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Person-gender1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"person\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/CodeableConcept.coding/{gender_concept_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Patient.gender
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Person-gender2> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"person\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/Patient/{person_id}/gender";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Patient.gender
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Person-gender3> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"person\" where \"gender_source_value\" LIKE 'M' or \"gender_source_value\" LIKE 'male'"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:object "male";
+      rr:predicate :value
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}/gender";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Person-gender4> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"person\" where \"gender_source_value\" LIKE 'F' or \"gender_source_value\" LIKE 'female'"
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:object "female";
+      rr:predicate :value
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Patient/{person_id}/gender";
+      rr:termType rr:IRI
+    ] .
+
+<urn:ConditionOccurrence-id1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"condition_occurrence\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}/id";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Resource.id
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class :Condition;
+      rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:ConditionOccurrence-id2> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"condition_occurrence\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "condition_occurrence_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate :value
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}/id";
+      rr:termType rr:IRI
+    ] .
+
+<urn:ConditionOccurrence-code1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"condition_occurrence\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}/{condition_concept_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Condition.code
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:ConditionOccurrence-code2> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"condition_occurrence\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/CodeableConcept.coding/{condition_concept_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :CodeableConcept.coding
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}/{condition_concept_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:ConditionOccurrence-type1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"condition_occurrence\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}/{condition_type_concept_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Condition.category
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:ConditionOccurrence-type2> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"condition_occurrence\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/CodeableConcept.coding/{condition_type_concept_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :CodeableConcept.coding
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}/{condition_type_concept_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:ConditionOccurrence-subject> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"condition_occurrence\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/Patient/{person_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Condition.subject
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:ConditionOccurrence-startdatetime1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"condition_occurrence\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}/onsetDatetime";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Condition.onsetDatetime
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:ConditionOccurrence-startdatetime2> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"condition_occurrence\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "condition_start_datetime";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate :value
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}/onsetDatetime";
+      rr:termType rr:IRI
+    ] .
+
+<urn:ConditionOccurrence-enddatetime1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"condition_occurrence\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}/abatementDatetime";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Condition.abatementDatetime
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:ConditionOccurrence-enddatetime2> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"condition_occurrence\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "condition_end_datetime";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate :value
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}/abatementDatetime";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Concept-type> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"concept\""
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class :Coding;
+      rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Concept-code1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"concept\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id}/code";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Coding.code
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Concept-code2> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"concept\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "concept_code";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate :value
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id}/code";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Concept-display1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"concept\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id}/display";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Coding.display
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Concept-display2> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"concept\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "concept_name";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate :value
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id}/display";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Concept-system1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"concept\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id}/system";
+          rr:termType rr:IRI
+        ];
+      rr:predicate :Coding.system
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:Concept-system2> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery "select * from \"omop\".\"concept\""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "vocabulary_id";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate :value
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id}/system";
+      rr:termType rr:IRI
+    ] .

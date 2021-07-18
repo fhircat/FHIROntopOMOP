@@ -12,14 +12,15 @@
     }
   },
   "name": {
-    "family": {"$column":  "familyName"},
-    "given": {"$column":  "firstName"}
-  },
-  "gender": {
-    "$expression": "MAKE_DATE(year_of_birth, month_of_birth, day_of_birth)"
+    "family": null,
+    "given": null
   },
   "birthDate": {
-    "$expression": "CASE WHEN \"gender_source_value\" LIKE 'M' or \"gender_source_value\" LIKE 'male' THEN 'male' ELSE 'female' END"
+    "$column": "birth_datetime"
+  },
+  "gender": {
+    "$expression": "CASE WHEN \"gender_source_value\" LIKE 'M' or \"gender_source_value\" LIKE 'male' THEN 'male' ELSE 'female' END",
+    "$alias": "gender"
   }
 }
 

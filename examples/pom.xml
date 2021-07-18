@@ -39,9 +39,15 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
+                <compilerArgs>
+                    <arg>--add-modules=java.xml.bind</arg>
+                </compilerArgs>
+                <!-- without forking compilation happens in the
+                    same process, so no arguments are applied -->
+                <fork>true</fork>
             </plugin>
         </plugins>
     </build>
