@@ -11,10 +11,10 @@
       "$column": "person_id"
     }
   },
-  "name": {
-    "family": null,
-    "given": null
-  },
+//  "name": {
+//    "family": null,
+//    "given": null
+//  },
   "birthDate": {
     "$column": "birth_datetime"
   },

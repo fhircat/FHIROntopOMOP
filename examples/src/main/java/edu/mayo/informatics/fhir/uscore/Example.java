@@ -25,19 +25,21 @@ import static java.util.stream.Collectors.joining;
 public class Example {
 
     public static void main(String[] args) throws IOException {
-        new Example().start();
+        String structureDefinitionFile = "src/main/resources/profiles/StructureDefinition-us-core-patient.json";
+        String fileName = "src/main/resources/mapping/Patient.json";
+//        String structureDefinitionFile = "src/main/resources/profiles/StructureDefinition-us-core-condition.json";
+//        String fileName = "src/main/resources/mapping/Condition.json";
+        generate(structureDefinitionFile, fileName);
     }
 
-    private void start() throws IOException {
-        String structureDefinitionFile = "src/main/resources/profiles/StructureDefinition-us-core-patient.json";
+    private static void generate(String structureDefinitionFile, String fileName) throws IOException {
         Map<String, String> fhirPathToPredicateNameMap = loadStructureDefinition(structureDefinitionFile);
 
         //System.out.println(fhirPathToPredicateNameMap);
-
         Gson gson = new Gson();
-        String fileName = "src/main/resources/mapping/Patient.json";
+
         JsonObject json = gson.fromJson(new FileReader(fileName), JsonObject.class);
-        Mapping.Entry entry = visitRoot(json, fhirPathToPredicateNameMap);
+        Mapping.Entry entry = new Example().visitRoot(json, fhirPathToPredicateNameMap);
         System.out.println(entry);
     }
 
@@ -81,7 +83,7 @@ public class Example {
         List<NodeParsedResult.ColumnNode> columnNodes = new ArrayList<>();
         List<NodeParsedResult.ExpressionNode> expressionNodes = new ArrayList<>();
         visit(json, fhirPathToPredicateNameMap, resourceType, subject, targetTemplates, columnNodes, expressionNodes);
-        targetTemplates.forEach(System.out::println);
+        //targetTemplates.forEach(System.out::println);
         //System.out.println();
         String columns = columnNodes.stream().map(NodeParsedResult.ColumnNode::column).collect(joining(", "));
         String expressions = expressionNodes.stream().map(n ->
@@ -91,7 +93,7 @@ public class Example {
         String projections = Stream.of(columns, expressions).filter(s -> !s.isEmpty()).collect(Collectors.joining(", "));
         String source = String.format("SELECT %s FROM %s", projections, tableName);
 
-        System.out.println(source);
+        //System.out.println(source);
         //return new MappingEntry(target, source);
         return new Mapping.Entry(targetTemplates, source);
     }

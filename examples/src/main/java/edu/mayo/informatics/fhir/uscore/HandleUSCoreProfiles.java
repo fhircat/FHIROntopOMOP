@@ -18,7 +18,7 @@ public class HandleUSCoreProfiles {
 //            "StructureDefinition-us-core-allergyintolerance.json",
 //            "StructureDefinition-us-core-careplan.json",
 //            "StructureDefinition-us-core-careteam.json",
-//            "StructureDefinition-us-core-condition.json",
+            "StructureDefinition-us-core-condition.json",
 //            "StructureDefinition-us-core-diagnosticreport-lab.json",
 //            "StructureDefinition-us-core-diagnosticreport-note.json",
 //            "StructureDefinition-us-core-documentreference.json",
@@ -31,7 +31,7 @@ public class HandleUSCoreProfiles {
 //            "StructureDefinition-us-core-medicationrequest.json",
 //            "StructureDefinition-us-core-observation-lab.json",
 //            "StructureDefinition-us-core-organization.json",
-            "StructureDefinition-us-core-patient.json",
+//            "StructureDefinition-us-core-patient.json",
 //            "StructureDefinition-us-core-practitioner.json",
 //            "StructureDefinition-us-core-practitionerrole.json",
 //            "StructureDefinition-us-core-procedure.json",
@@ -226,6 +226,7 @@ public class HandleUSCoreProfiles {
 
         StringBuffer sb = new StringBuffer();
 
+//        for (int i = 0; i < usCoreCodeSystemNames.length; i++) {
         for (int i = 0; i < usCoreProfileNames.length; i++) {
 
             String fileName = profilePath + usCoreProfileNames[i];
