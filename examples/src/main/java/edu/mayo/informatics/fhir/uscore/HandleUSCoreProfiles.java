@@ -85,9 +85,9 @@ public class HandleUSCoreProfiles {
     };
 
     private static String[] usCoreCodeSystemNames = {
-            "CodeSystem-careplan-category.json\n",
-            "CodeSystem-condition-category.json\n",
-            "CodeSystem-us-core-documentreference-category.json\n",
+            "CodeSystem-careplan-category.json",
+            "CodeSystem-condition-category.json",
+            "CodeSystem-us-core-documentreference-category.json",
             "CodeSystem-us-core-provenance-participant-type.json"
     };
 

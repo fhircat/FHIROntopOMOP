@@ -1,0 +1,47 @@
+@prefix :       <http://hl7.org/fhir/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix rr:     <http://www.w3.org/ns/r2rml#>.
+
+[] # person -> :Patient
+    rr:logicalTable       [ rr:sqlQuery '''SELECT *,
+		CASE 
+			WHEN "gender_source_value" LIKE 'M' or "gender_source_value" LIKE 'male' THEN 'male'
+	        WHEN "gender_source_value" LIKE 'F' or "gender_source_value" LIKE 'female' THEN 'female'
+			ELSE 'other' 
+		END AS gender
+    FROM omop.person''' ] ;
+    rr:subjectMap         [ rr:template "https://example.org/Patient/{person_id}" ] ;
+    rr:predicateObjectMap [ a                  :Patient ;
+                            :Resource.id       [ :value [ rr:column "person_id" ] ] ;
+                            :Patient.gender    [ :value [ rr:column "gender" ] ] ; # 0..1 male | female | other | unknown
+                            :Patient.birthDate [ :value [ rr:column "birth_datetime" ] ] ; # 0..1 The date of birth for the individual
+                          ] .
+
+[] # condition_occurrence -> :Condition
+    rr:logicalTable       [ rr:tableName "omop.condition_occurrence" ] ;
+    rr:subjectMap         [ rr:template "https://example.org/Condition/{condition_occurrence_id}" ] ;
+    rr:predicateObjectMap [ a                            :Condition ;
+                            :Resource.id                 [ :value [ rr:column "condition_occurrence_id" ] ] ;
+                            :Condition.code              [ :CodeableConcept.coding [ rr:termType rr:IRI ;
+                                                                                     rr:template "https://example.org/CodeableConcept.coding/{condition_concept_id}" ] ] ;
+                            :Condition.category          [ :CodeableConcept.coding [ rr:termType rr:IRI ;
+                                                                                     rr:template "https://example.org/CodeableConcept.coding/{condition_type_concept_id}" ] ] ;
+                            :Condition.subject           [ rr:termType rr:IRI ;
+                                                           rr:tempalte "https://example.org/Patient/{person_id}" ] ;
+                            :Condition.onsetDatetime     [ :value [ rr:column   "condition_start_datetime" ;
+                                                                    rr:datatype xsd:dateTime ] ] ;
+                            :Condition.abatementDatetime [ :value [ rr:column   "condition_end_datetime" ;
+                                                                    rr:datatype xsd:dateTime ] ] ; ] .
+
+[ ] # concept -> :Coding
+    rr:logicalTable       [ rr:tableName "omop.concept" ] ;
+    rr:subjectMap         [ rr:template "https://example.org/CodeableConcept.coding/{concept_id}" ] ;
+    rr:predicateObjectMap [ a               :Coding ;
+                            :Resource.id    [ :value [ rr:column   "concept_id" ;
+                                                       rr:datatype xsd:string ] ] ;
+                            :Coding.code    [ :value [ rr:column   "concept_code" ;
+                                                       rr:datatype xsd:string ] ] ;
+                            :Coding.display [ :value [ rr:column   "concept_name" ;
+                                                       rr:datatype xsd:string ] ] ;
+                            :Coding.system  [ :value [ rr:column   "vocabulary_id" ;
+                                                       rr:datatype xsd:string ] ] ; ] .

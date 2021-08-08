@@ -2,7 +2,8 @@ package edu.mayo.informatics.fhir.uscore;
 
 import com.google.gson.JsonObject;
 
-sealed interface NodeParsedResult {
+//sealed 
+interface NodeParsedResult {
 
     record ColumnNode(String column) implements NodeParsedResult {
     }
