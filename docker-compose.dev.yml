@@ -8,7 +8,8 @@ services:
     environment:
       ONTOP_ONTOLOGY_FILE: /opt/ontop/input/fhir.ttl
 #      ONTOP_XML_CATALOG_FILE: /opt/ontop/input/catalog-v001.xml
-      ONTOP_MAPPING_FILE: /opt/ontop/input/fhir.obda        
+      #ONTOP_MAPPING_FILE: /opt/ontop/input/fhir.obda
+      ONTOP_MAPPING_FILE: /opt/ontop/input/omop.obda      
       ONTOP_PROPERTIES_FILE: /opt/ontop/input/fhir.docker.properties
       ONTOP_CONSTRAINT_FILE: /opt/ontop/input/fhir.db_prefs
       ONTOP_PORTAL_FILE: /opt/ontop/input/fhir.portal.toml      
