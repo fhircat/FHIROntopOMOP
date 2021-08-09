@@ -1,4 +1,4 @@
-package edu.mayo.informatics.fhir.uscore;
+package org.fhircat.mapping;
 
 import java.io.IOException;
 
@@ -13,6 +13,6 @@ public class OmopExample {
             inputMappingFile = args[0];
             outputMappingFile = args[1];
         }
-        new Converter().go(inputMappingFile, outputMappingFile);
+        new TurtleTemplateConverter().go(inputMappingFile, outputMappingFile);
     }
 }

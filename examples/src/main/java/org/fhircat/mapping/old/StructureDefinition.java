@@ -1,4 +1,4 @@
-package edu.mayo.informatics.fhir.uscore.bak;
+package org.fhircat.mapping.old;
 
 import java.util.Map;
 

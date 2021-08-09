@@ -1,4 +1,4 @@
-package edu.mayo.informatics.fhir.uscore;
+package org.fhircat.mapping;
 
 import java.util.List;
 import java.util.Objects;
@@ -56,7 +56,10 @@ public record Mapping(List<String> prefixes, List<Entry> entries) {
             return switch (type) {
                 case IRI -> "<" + lexical + ">";
                 case BNODE -> "_:" + lexical;
-                case LITERAL -> "\"%s\"%s".formatted(lexical, datatype == null ? "" : "^^<" + datatype + ">");
+                case LITERAL -> {
+                    String dt = datatype == null ? "" : "^^<" + datatype + ">";
+                    yield "\"%s\"%s".formatted(lexical, dt);
+                }
             };
         }
     }

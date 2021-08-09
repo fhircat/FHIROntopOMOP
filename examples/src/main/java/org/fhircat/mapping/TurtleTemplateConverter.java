@@ -1,4 +1,4 @@
-package edu.mayo.informatics.fhir.uscore;
+package org.fhircat.mapping;
 
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import org.eclipse.rdf4j.model.*;
@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.eclipse.rdf4j.model.util.Values.iri;
 
-public class Converter {
+public class TurtleTemplateConverter {
 
     private static final IRI RR_PREDICATE_OBJECT_MAP = iri(R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP);
     private static final IRI RR_LOGICAL_TABLE = iri(R2RMLVocabulary.PROP_LOGICAL_TABLE);
