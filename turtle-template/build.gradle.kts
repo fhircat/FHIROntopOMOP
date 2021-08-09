@@ -26,9 +26,9 @@ dependencies {
     implementation("eu.optique-project:r2rml-api-rdf4j-binding:0.6.0")
 }
 
-group = "com.mycompany.app"
+group = "org.fhircat"
 version = "1"
-description = "my-app"
+description = "turtle-template"
 java.sourceCompatibility = JavaVersion.VERSION_16
 
 publishing {
