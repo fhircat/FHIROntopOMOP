@@ -21,7 +21,6 @@ public record Mapping(List<String> prefixes, List<Entry> entries) {
         );
     }
 
-
     public static record Entry(String id, List<Mapping.Triple> target, String source) {
         @Override
         public String toString() {
@@ -33,12 +32,12 @@ public record Mapping(List<String> prefixes, List<Entry> entries) {
         }
     }
 
-    public static enum TermMapType {
+    public enum TermMapType {
         CONSTANT, TEMPLATE, COLUMN
     }
 
-    public static enum TermType {
-        IRI, BNode, LITERAL
+    public enum TermType {
+        IRI, BNODE, LITERAL
     }
 
     public record TermMap(String value, TermType type, TermMapType mapType) {
@@ -51,7 +50,7 @@ public record Mapping(List<String> prefixes, List<Entry> entries) {
 
             return switch (type) {
                 case IRI -> "<" + lexical + ">";
-                case BNode -> "_:" + lexical;
+                case BNODE -> "_:" + lexical;
                 case LITERAL -> "\"" + lexical + "\"";
             };
         }
@@ -63,8 +62,6 @@ public record Mapping(List<String> prefixes, List<Entry> entries) {
             return String.format("%s %s %s .", subject, predicate, object);
         }
     }
-
-
 }
 
 
