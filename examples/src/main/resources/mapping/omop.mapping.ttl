@@ -14,7 +14,8 @@
     rr:predicateObjectMap [ a                  :Patient ;
                             :Resource.id       [ :value [ rr:column "person_id" ] ] ;
                             :Patient.gender    [ :value [ rr:column "gender" ] ] ; # 0..1 male | female | other | unknown
-                            :Patient.birthDate [ :value [ rr:column "birth_datetime" ] ] ; # 0..1 The date of birth for the individual
+                            :Patient.birthDate [ :value [ rr:column   "birth_datetime" ;
+                                                          rr:datatype xsd:dateTime ] ] ; # 0..1 The date of birth for the individual
                           ] .
 
 [] # condition_occurrence -> :Condition

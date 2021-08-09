@@ -2,6 +2,7 @@ package edu.mayo.informatics.fhir.uscore;
 
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import org.eclipse.rdf4j.model.*;
+import org.eclipse.rdf4j.model.vocabulary.XSD;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
@@ -105,16 +106,17 @@ public class Converter {
                 ));
             }
             if (object instanceof BNode bnode) {
-                Optional<Value> column = getObject(conn, bnode, RR_COLUMN);
                 boolean terminal = false;
+                Optional<Value> column = getObject(conn, bnode, RR_COLUMN);
                 // TODO: rr:termType
                 // TODO: rr:language
                 if (column.isPresent()) {
                     //System.out.printf("-> %s %s {%s} %n", subject, predicate, column.get());
                     terminal = true;
-                    triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap,
-                            new Mapping.TermMap(column.get().stringValue(), Mapping.TermType.LITERAL, Mapping.TermMapType.COLUMN)
-                    ));
+                    String datatype = getObject(conn, bnode, RR_DATATYPE).orElse(XSD.STRING).stringValue();
+                    Mapping.TermMap objectTermMap = new Mapping.TermMap(column.get().stringValue(),
+                            Mapping.TermType.LITERAL, Mapping.TermMapType.COLUMN, datatype);
+                    triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap, objectTermMap));
                 }
 
                 Optional<Value> template = getObject(conn, bnode, RR_TEMPLATE);

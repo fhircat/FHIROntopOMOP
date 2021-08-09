@@ -40,7 +40,12 @@ public record Mapping(List<String> prefixes, List<Entry> entries) {
         IRI, BNODE, LITERAL
     }
 
-    public record TermMap(String value, TermType type, TermMapType mapType) {
+    public record TermMap(String value, TermType type, TermMapType mapType, String datatype) {
+
+        public TermMap(String value, TermType type, TermMapType mapType) {
+            this(value, type, mapType, null);
+        }
+
         @Override
         public String toString() {
             String lexical = switch (mapType) {
@@ -51,7 +56,7 @@ public record Mapping(List<String> prefixes, List<Entry> entries) {
             return switch (type) {
                 case IRI -> "<" + lexical + ">";
                 case BNODE -> "_:" + lexical;
-                case LITERAL -> "\"" + lexical + "\"";
+                case LITERAL -> "\"%s\"%s".formatted(lexical, datatype == null ? "" : "^^<" + datatype + ">");
             };
         }
     }
