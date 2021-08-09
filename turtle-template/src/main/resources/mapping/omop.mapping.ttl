@@ -13,10 +13,9 @@
     rr:subjectMap         [ rr:template "https://example.org/Patient/{person_id}" ] ;
     rr:predicateObjectMap [ a                  :Patient ;
                             :Resource.id       [ :value [ rr:column "person_id" ] ] ;
-                            :Patient.gender    [ :value [ rr:column "gender" ] ] ; # 0..1 male | female | other | unknown
+                            :Patient.gender    [ :value [ rr:column "gender" ] ] ;
                             :Patient.birthDate [ :value [ rr:column   "birth_datetime" ;
-                                                          rr:datatype xsd:dateTime ] ] ; # 0..1 The date of birth for the individual
-                          ] .
+                                                          rr:datatype xsd:dateTime ] ] ; ] .
 
 [] # condition_occurrence -> :Condition
     rr:logicalTable       [ rr:tableName "omop.condition_occurrence" ] ;

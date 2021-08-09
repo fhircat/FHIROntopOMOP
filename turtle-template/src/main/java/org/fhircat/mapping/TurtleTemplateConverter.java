@@ -8,6 +8,7 @@ import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.sail.memory.MemoryStore;
+import org.fhircat.mapping.Mapping.TermMap;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -18,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.fhircat.mapping.Mapping.TermMapType;
 
 import static org.eclipse.rdf4j.model.util.Values.iri;
 
@@ -79,7 +82,7 @@ public class TurtleTemplateConverter {
 
         Resource predicateObjectMap = getUniqueObjectAsResource(conn, triplesMap, RR_PREDICATE_OBJECT_MAP);
 
-        Mapping.TermMap subjectTermMap = new Mapping.TermMap(template.getLabel(), Mapping.TermType.IRI, Mapping.TermMapType.TEMPLATE);
+        TermMap subjectTermMap = new TermMap(template.getLabel(), Mapping.TermType.IRI, TermMapType.TEMPLATE);
 
         List<Mapping.Triple> target = visit(conn, predicateObjectMap, 0, subjectTermMap);
         //target.forEach(System.out::println);
@@ -87,7 +90,7 @@ public class TurtleTemplateConverter {
         return new Mapping.Entry("mapping" + counter, target, sourceQuery);
     }
 
-    private static List<Mapping.Triple> visit(RepositoryConnection conn, Resource node, int level, Mapping.TermMap subjectTermMap) {
+    private static List<Mapping.Triple> visit(RepositoryConnection conn, Resource node, int level, TermMap subjectTermMap) {
 
         List<Mapping.Triple> triples = new ArrayList<>();
 
@@ -97,12 +100,12 @@ public class TurtleTemplateConverter {
         for (Statement stmt : stmts) {
             Value object = stmt.getObject();
             IRI predicate = stmt.getPredicate();
-            Mapping.TermMap predicateTermMap = new Mapping.TermMap(predicate.stringValue(), Mapping.TermType.IRI, Mapping.TermMapType.CONSTANT);
+            TermMap predicateTermMap = new TermMap(predicate.stringValue(), Mapping.TermType.IRI, TermMapType.CONSTANT);
 
             if (object instanceof IRI iriObject) {
                 //System.out.printf("-> %s %s %s %n", subject, predicate, iriObject);
                 triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap,
-                        new Mapping.TermMap(iriObject.stringValue(), Mapping.TermType.IRI, Mapping.TermMapType.CONSTANT)
+                        new TermMap(iriObject.stringValue(), Mapping.TermType.IRI, TermMapType.CONSTANT)
                 ));
             }
             if (object instanceof BNode bnode) {
@@ -114,8 +117,8 @@ public class TurtleTemplateConverter {
                     //System.out.printf("-> %s %s {%s} %n", subject, predicate, column.get());
                     terminal = true;
                     String datatype = getObject(conn, bnode, RR_DATATYPE).orElse(XSD.STRING).stringValue();
-                    Mapping.TermMap objectTermMap = new Mapping.TermMap(column.get().stringValue(),
-                            Mapping.TermType.LITERAL, Mapping.TermMapType.COLUMN, datatype);
+                    TermMap objectTermMap = new TermMap(column.get().stringValue(),
+                            Mapping.TermType.LITERAL, TermMapType.COLUMN, datatype);
                     triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap, objectTermMap));
                 }
 
@@ -124,14 +127,14 @@ public class TurtleTemplateConverter {
                     terminal = true;
                     //System.out.printf("-> %s %s %s %n", subject, predicate, template.get());
                     triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap,
-                            new Mapping.TermMap(template.get().stringValue(), Mapping.TermType.IRI, Mapping.TermMapType.TEMPLATE)
+                            new TermMap(template.get().stringValue(), Mapping.TermType.IRI, TermMapType.TEMPLATE)
                     ));
                 }
 
                 if (!terminal) {
                     String newSubject = "%s/%s".formatted(subjectTermMap.value(), predicate.getLocalName());
                     //System.out.printf("-> %s %s %s %n", subject, predicate, newSubject);
-                    Mapping.TermMap newSubjectMap = new Mapping.TermMap(newSubject, Mapping.TermType.IRI, Mapping.TermMapType.TEMPLATE);
+                    TermMap newSubjectMap = new TermMap(newSubject, Mapping.TermType.IRI, TermMapType.TEMPLATE);
                     triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap, newSubjectMap));
                     triples.addAll(visit(conn, bnode, level + 1, newSubjectMap)); // recursion!
                 }
@@ -152,8 +155,8 @@ public class TurtleTemplateConverter {
     }
 
     @NotNull
-    private static Optional<Value> getObject(RepositoryConnection conn, Resource triplesMap, IRI predicate) {
-        return conn.getStatements(triplesMap, predicate, null)
+    private static Optional<Value> getObject(RepositoryConnection conn, Resource subject, IRI predicate) {
+        return conn.getStatements(subject, predicate, null)
                 .stream().map(Statement::getObject).findFirst();
     }
 
