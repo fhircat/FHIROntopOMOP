@@ -27,10 +27,10 @@
                             :Condition.category          [ :CodeableConcept.coding [ rr:termType rr:IRI ;
                                                                                      rr:template "https://example.org/CodeableConcept.coding/{condition_type_concept_id}" ] ] ;
                             :Condition.subject           [ rr:termType rr:IRI ;
-                                                           rr:tempalte "https://example.org/Patient/{person_id}" ] ;
-                            :Condition.onsetDatetime     [ :value [ rr:column   "condition_start_datetime" ;
+                                                           rr:template "https://example.org/Patient/{person_id}" ] ;
+                            :Condition.onsetDateTime     [ :value [ rr:column   "condition_start_datetime" ;
                                                                     rr:datatype xsd:dateTime ] ] ;
-                            :Condition.abatementDatetime [ :value [ rr:column   "condition_end_datetime" ;
+                            :Condition.abatementDateTime [ :value [ rr:column   "condition_end_datetime" ;
                                                                     rr:datatype xsd:dateTime ] ] ; ] .
 
 [ ] # concept -> :Coding

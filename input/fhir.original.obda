@@ -1,0 +1,128 @@
+[PrefixDeclaration]
+:		http://hl7.org/fhir/
+owl:		http://www.w3.org/2002/07/owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+xml:		http://www.w3.org/XML/1998/namespace
+xsd:		http://www.w3.org/2001/XMLSchema#
+fhir:		http://hl7.org/fhir/
+obda:		https://w3id.org/obda/vocabulary#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+
+[MappingDeclaration] @collection [[
+mappingId	Person-person_id
+target		:Patient/{person_id} a :Patient ; :Resource.id :Patient/{person_id}/id . :Patient/{person_id}/id :value {person_id}^^xsd:string . 
+source		select * from "omop"."person"
+
+mappingId	Person-birthDate1
+target		:Patient/{person_id} :Patient.birthDate :Patient/{person_id}/birthDate . :Patient/{person_id}/birthDate :value {date}^^xsd:date . 
+source		select *, MAKE_DATE(year_of_birth, month_of_birth, day_of_birth) AS date from "omop"."person"
+
+mappingId	Person-birthDatetime1
+target		:Patient/{person_id}/birthDate :Element.extension :Patient/{person_id}/birthDate/Elementextension . 
+source		select * from "omop"."person"
+
+mappingId	Person-birthDatetime2
+target		:Patient/{person_id}/birthDate/Elementextension :Extension.url :Patient/{person_id}/birthDate/Elementextension/url . 
+source		select * from "omop"."person"
+
+mappingId	Person-birthDatetime3
+target		:Patient/{person_id}/birthDate/Elementextension/url :value "http://hl7.org/fhir/StructureDefinition/patient-birthTime"^^xsd:string . 
+source		select * from "omop"."person"
+
+mappingId	Person-birthDatetime4
+target		:Patient/{person_id}/birthDate/Elementextension :Extension.valueDatetime :Patient/{person_id}/birthDate/Elementextension/valueDatetime . 
+source		select * from "omop"."person"
+
+mappingId	Person-birthDatetime5
+target		:Patient/{person_id}/birthDate/Elementextension/valueDatetime :value {birth_datetime}^^xsd:dateTime . 
+source		select * from "omop"."person"
+
+mappingId	Person-gender1
+target		:Patient/{person_id} :Patient.gender :CodeableConcept.coding/{gender_concept_id} . 
+source		select * from "omop"."person"
+
+mappingId	Person-gender2
+target		:Patient/{person_id} :Patient.gender :Patient/{person_id}/gender . 
+source		select * from "omop"."person"
+
+mappingId	Person-gender3
+target		:Patient/{person_id}/gender :value "male"^^xsd:string . 
+source		select * from "omop"."person" where "gender_source_value" LIKE 'M' or "gender_source_value" LIKE 'male'
+
+mappingId	Person-gender4
+target		:Patient/{person_id}/gender :value "female"^^xsd:string . 
+source		select * from "omop"."person" where "gender_source_value" LIKE 'F' or "gender_source_value" LIKE 'female'
+
+mappingId	ConditionOccurrence-id1
+target		:Condition/{condition_occurrence_id} a :Condition ; :Resource.id :Condition/{condition_occurrence_id}/id . 
+source		select * from "omop"."condition_occurrence"
+
+mappingId	ConditionOccurrence-id2
+target		:Condition/{condition_occurrence_id}/id :value {condition_occurrence_id}^^xsd:string . 
+source		select * from "omop"."condition_occurrence"
+
+mappingId	ConditionOccurrence-code1
+target		:Condition/{condition_occurrence_id} :Condition.code :Condition/{condition_occurrence_id}/{condition_concept_id} . 
+source		select * from "omop"."condition_occurrence"
+
+mappingId	ConditionOccurrence-code2
+target		:Condition/{condition_occurrence_id}/{condition_concept_id} :CodeableConcept.coding :CodeableConcept.coding/{condition_concept_id} . 
+source		select * from "omop"."condition_occurrence"
+
+mappingId	ConditionOccurrence-type1
+target		:Condition/{condition_occurrence_id} :Condition.category :Condition/{condition_occurrence_id}/{condition_type_concept_id} . 
+source		select * from "omop"."condition_occurrence"
+
+mappingId	ConditionOccurrence-type2
+target		:Condition/{condition_occurrence_id}/{condition_type_concept_id} :CodeableConcept.coding :CodeableConcept.coding/{condition_type_concept_id} . 
+source		select * from "omop"."condition_occurrence"
+
+mappingId	ConditionOccurrence-subject
+target		:Condition/{condition_occurrence_id} :Condition.subject :Patient/{person_id} . 
+source		select * from "omop"."condition_occurrence"
+
+mappingId	ConditionOccurrence-startdatetime1
+target		:Condition/{condition_occurrence_id} :Condition.onsetDatetime :Condition/{condition_occurrence_id}/onsetDatetime . 
+source		select * from "omop"."condition_occurrence"
+
+mappingId	ConditionOccurrence-startdatetime2
+target		:Condition/{condition_occurrence_id}/onsetDatetime :value {condition_start_datetime}^^xsd:dateTime . 
+source		select * from "omop"."condition_occurrence"
+
+mappingId	ConditionOccurrence-enddatetime1
+target		:Condition/{condition_occurrence_id} :Condition.abatementDatetime :Condition/{condition_occurrence_id}/abatementDatetime . 
+source		select * from "omop"."condition_occurrence"
+
+mappingId	ConditionOccurrence-enddatetime2
+target		:Condition/{condition_occurrence_id}/abatementDatetime :value {condition_end_datetime}^^xsd:dateTime . 
+source		select * from "omop"."condition_occurrence"
+
+mappingId	Concept-type
+target		:CodeableConcept.coding/{concept_id} a :Coding . 
+source		select * from "omop"."concept"
+
+mappingId	Concept-code1
+target		:CodeableConcept.coding/{concept_id} :Coding.code :CodeableConcept.coding/{concept_id}/code . 
+source		select * from "omop"."concept"
+
+mappingId	Concept-code2
+target		:CodeableConcept.coding/{concept_id}/code :value {concept_code}^^xsd:string . 
+source		select * from "omop"."concept"
+
+mappingId	Concept-display1
+target		:CodeableConcept.coding/{concept_id} :Coding.display :CodeableConcept.coding/{concept_id}/display . 
+source		select * from "omop"."concept"
+
+mappingId	Concept-display2
+target		:CodeableConcept.coding/{concept_id}/display :value {concept_name}^^xsd:string . 
+source		select * from "omop"."concept"
+
+mappingId	Concept-system1
+target		:CodeableConcept.coding/{concept_id} :Coding.system :CodeableConcept.coding/{concept_id}/system . 
+source		select * from "omop"."concept"
+
+mappingId	Concept-system2
+target		:CodeableConcept.coding/{concept_id}/system :value {vocabulary_id}^^xsd:string . 
+source		select * from "omop"."concept"
+]]
+

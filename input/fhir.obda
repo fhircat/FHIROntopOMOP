@@ -9,120 +9,21 @@ obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
 
 [MappingDeclaration] @collection [[
-mappingId	Person-person_id
-target		:Patient/{person_id} a :Patient ; :Resource.id :Patient/{person_id}/id . :Patient/{person_id}/id :value {person_id}^^xsd:string . 
-source		select * from "omop"."person"
+mappingId	mapping1
+target	<https://example.org/Patient/{person_id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://hl7.org/fhir/Patient> . <https://example.org/Patient/{person_id}> <http://hl7.org/fhir/Resource.id> <https://example.org/Patient/{person_id}/Resource.id> . <https://example.org/Patient/{person_id}/Resource.id> <http://hl7.org/fhir/value> "{person_id}" . <https://example.org/Patient/{person_id}> <http://hl7.org/fhir/Patient.gender> <https://example.org/Patient/{person_id}/Patient.gender> . <https://example.org/Patient/{person_id}/Patient.gender> <http://hl7.org/fhir/value> "{gender}" . <https://example.org/Patient/{person_id}> <http://hl7.org/fhir/Patient.birthDate> <https://example.org/Patient/{person_id}/Patient.birthDate> . <https://example.org/Patient/{person_id}/Patient.birthDate> <http://hl7.org/fhir/value> "{birth_datetime}" .
+source	SELECT *,
+		CASE 
+			WHEN "gender_source_value" LIKE 'M' or "gender_source_value" LIKE 'male' THEN 'male'
+	        WHEN "gender_source_value" LIKE 'F' or "gender_source_value" LIKE 'female' THEN 'female'
+			ELSE 'other' 
+		END AS gender
+    FROM omop.person
 
-mappingId	Person-birthDate1
-target		:Patient/{person_id} :Patient.birthDate :Patient/{person_id}/birthDate . :Patient/{person_id}/birthDate :value {date}^^xsd:date . 
-source		select *, MAKE_DATE(year_of_birth, month_of_birth, day_of_birth) AS date from "omop"."person"
+mappingId	mapping2
+target	<https://example.org/Condition/{condition_occurrence_id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://hl7.org/fhir/Condition> . <https://example.org/Condition/{condition_occurrence_id}> <http://hl7.org/fhir/Resource.id> <https://example.org/Condition/{condition_occurrence_id}/Resource.id> . <https://example.org/Condition/{condition_occurrence_id}/Resource.id> <http://hl7.org/fhir/value> "{condition_occurrence_id}" . <https://example.org/Condition/{condition_occurrence_id}> <http://hl7.org/fhir/Condition.code> <https://example.org/Condition/{condition_occurrence_id}/Condition.code> . <https://example.org/Condition/{condition_occurrence_id}/Condition.code> <http://hl7.org/fhir/CodeableConcept.coding> <https://example.org/CodeableConcept.coding/{condition_concept_id}> . <https://example.org/Condition/{condition_occurrence_id}> <http://hl7.org/fhir/Condition.category> <https://example.org/Condition/{condition_occurrence_id}/Condition.category> . <https://example.org/Condition/{condition_occurrence_id}/Condition.category> <http://hl7.org/fhir/CodeableConcept.coding> <https://example.org/CodeableConcept.coding/{condition_type_concept_id}> . <https://example.org/Condition/{condition_occurrence_id}> <http://hl7.org/fhir/Condition.subject> <https://example.org/Patient/{person_id}> . <https://example.org/Condition/{condition_occurrence_id}> <http://hl7.org/fhir/Condition.onsetDateTime> <https://example.org/Condition/{condition_occurrence_id}/Condition.onsetDateTime> . <https://example.org/Condition/{condition_occurrence_id}/Condition.onsetDateTime> <http://hl7.org/fhir/value> "{condition_start_datetime}" . <https://example.org/Condition/{condition_occurrence_id}> <http://hl7.org/fhir/Condition.abatementDateTime> <https://example.org/Condition/{condition_occurrence_id}/Condition.abatementDateTime> . <https://example.org/Condition/{condition_occurrence_id}/Condition.abatementDateTime> <http://hl7.org/fhir/value> "{condition_end_datetime}" .
+source	SELECT * FROM omop.condition_occurrence
 
-mappingId	Person-birthDatetime1
-target		:Patient/{person_id}/birthDate :Element.extension :Patient/{person_id}/birthDate/Elementextension . 
-source		select * from "omop"."person"
-
-mappingId	Person-birthDatetime2
-target		:Patient/{person_id}/birthDate/Elementextension :Extension.url :Patient/{person_id}/birthDate/Elementextension/url . 
-source		select * from "omop"."person"
-
-mappingId	Person-birthDatetime3
-target		:Patient/{person_id}/birthDate/Elementextension/url :value "http://hl7.org/fhir/StructureDefinition/patient-birthTime"^^xsd:string . 
-source		select * from "omop"."person"
-
-mappingId	Person-birthDatetime4
-target		:Patient/{person_id}/birthDate/Elementextension :Extension.valueDatetime :Patient/{person_id}/birthDate/Elementextension/valueDatetime . 
-source		select * from "omop"."person"
-
-mappingId	Person-birthDatetime5
-target		:Patient/{person_id}/birthDate/Elementextension/valueDatetime :value {birth_datetime}^^xsd:dateTime . 
-source		select * from "omop"."person"
-
-mappingId	Person-gender1
-target		:Patient/{person_id} :Patient.gender :CodeableConcept.coding/{gender_concept_id} . 
-source		select * from "omop"."person"
-
-mappingId	Person-gender2
-target		:Patient/{person_id} :Patient.gender :Patient/{person_id}/gender . 
-source		select * from "omop"."person"
-
-mappingId	Person-gender3
-target		:Patient/{person_id}/gender :value "male"^^xsd:string . 
-source		select * from "omop"."person" where "gender_source_value" LIKE 'M' or "gender_source_value" LIKE 'male'
-
-mappingId	Person-gender4
-target		:Patient/{person_id}/gender :value "female"^^xsd:string . 
-source		select * from "omop"."person" where "gender_source_value" LIKE 'F' or "gender_source_value" LIKE 'female'
-
-mappingId	ConditionOccurrence-id1
-target		:Condition/{condition_occurrence_id} a :Condition ; :Resource.id :Condition/{condition_occurrence_id}/id . 
-source		select * from "omop"."condition_occurrence"
-
-mappingId	ConditionOccurrence-id2
-target		:Condition/{condition_occurrence_id}/id :value {condition_occurrence_id}^^xsd:string . 
-source		select * from "omop"."condition_occurrence"
-
-mappingId	ConditionOccurrence-code1
-target		:Condition/{condition_occurrence_id} :Condition.code :Condition/{condition_occurrence_id}/{condition_concept_id} . 
-source		select * from "omop"."condition_occurrence"
-
-mappingId	ConditionOccurrence-code2
-target		:Condition/{condition_occurrence_id}/{condition_concept_id} :CodeableConcept.coding :CodeableConcept.coding/{condition_concept_id} . 
-source		select * from "omop"."condition_occurrence"
-
-mappingId	ConditionOccurrence-type1
-target		:Condition/{condition_occurrence_id} :Condition.category :Condition/{condition_occurrence_id}/{condition_type_concept_id} . 
-source		select * from "omop"."condition_occurrence"
-
-mappingId	ConditionOccurrence-type2
-target		:Condition/{condition_occurrence_id}/{condition_type_concept_id} :CodeableConcept.coding :CodeableConcept.coding/{condition_type_concept_id} . 
-source		select * from "omop"."condition_occurrence"
-
-mappingId	ConditionOccurrence-subject
-target		:Condition/{condition_occurrence_id} :Condition.subject :Patient/{person_id} . 
-source		select * from "omop"."condition_occurrence"
-
-mappingId	ConditionOccurrence-startdatetime1
-target		:Condition/{condition_occurrence_id} :Condition.onsetDatetime :Condition/{condition_occurrence_id}/onsetDatetime . 
-source		select * from "omop"."condition_occurrence"
-
-mappingId	ConditionOccurrence-startdatetime2
-target		:Condition/{condition_occurrence_id}/onsetDatetime :value {condition_start_datetime}^^xsd:dateTime . 
-source		select * from "omop"."condition_occurrence"
-
-mappingId	ConditionOccurrence-enddatetime1
-target		:Condition/{condition_occurrence_id} :Condition.abatementDatetime :Condition/{condition_occurrence_id}/abatementDatetime . 
-source		select * from "omop"."condition_occurrence"
-
-mappingId	ConditionOccurrence-enddatetime2
-target		:Condition/{condition_occurrence_id}/abatementDatetime :value {condition_end_datetime}^^xsd:dateTime . 
-source		select * from "omop"."condition_occurrence"
-
-mappingId	Concept-type
-target		:CodeableConcept.coding/{concept_id} a :Coding . 
-source		select * from "omop"."concept"
-
-mappingId	Concept-code1
-target		:CodeableConcept.coding/{concept_id} :Coding.code :CodeableConcept.coding/{concept_id}/code . 
-source		select * from "omop"."concept"
-
-mappingId	Concept-code2
-target		:CodeableConcept.coding/{concept_id}/code :value {concept_code}^^xsd:string . 
-source		select * from "omop"."concept"
-
-mappingId	Concept-display1
-target		:CodeableConcept.coding/{concept_id} :Coding.display :CodeableConcept.coding/{concept_id}/display . 
-source		select * from "omop"."concept"
-
-mappingId	Concept-display2
-target		:CodeableConcept.coding/{concept_id}/display :value {concept_name}^^xsd:string . 
-source		select * from "omop"."concept"
-
-mappingId	Concept-system1
-target		:CodeableConcept.coding/{concept_id} :Coding.system :CodeableConcept.coding/{concept_id}/system . 
-source		select * from "omop"."concept"
-
-mappingId	Concept-system2
-target		:CodeableConcept.coding/{concept_id}/system :value {vocabulary_id}^^xsd:string . 
-source		select * from "omop"."concept"
+mappingId	mapping3
+target	<https://example.org/CodeableConcept.coding/{concept_id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://hl7.org/fhir/Coding> . <https://example.org/CodeableConcept.coding/{concept_id}> <http://hl7.org/fhir/Resource.id> <https://example.org/CodeableConcept.coding/{concept_id}/Resource.id> . <https://example.org/CodeableConcept.coding/{concept_id}/Resource.id> <http://hl7.org/fhir/value> "{concept_id}" . <https://example.org/CodeableConcept.coding/{concept_id}> <http://hl7.org/fhir/Coding.code> <https://example.org/CodeableConcept.coding/{concept_id}/Coding.code> . <https://example.org/CodeableConcept.coding/{concept_id}/Coding.code> <http://hl7.org/fhir/value> "{concept_code}" . <https://example.org/CodeableConcept.coding/{concept_id}> <http://hl7.org/fhir/Coding.display> <https://example.org/CodeableConcept.coding/{concept_id}/Coding.display> . <https://example.org/CodeableConcept.coding/{concept_id}/Coding.display> <http://hl7.org/fhir/value> "{concept_name}" . <https://example.org/CodeableConcept.coding/{concept_id}> <http://hl7.org/fhir/Coding.system> <https://example.org/CodeableConcept.coding/{concept_id}/Coding.system> . <https://example.org/CodeableConcept.coding/{concept_id}/Coding.system> <http://hl7.org/fhir/value> "{vocabulary_id}" .
+source	SELECT * FROM omop.concept
 ]]
-
