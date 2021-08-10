@@ -9,7 +9,7 @@
 	        WHEN "gender_source_value" LIKE 'F' or "gender_source_value" LIKE 'female' THEN 'female'
 			ELSE 'other' 
 		END AS gender
-    FROM omop.person''' ] ;
+    FROM person''' ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ;
     rr:predicateObjectMap [ a                  :Patient ;
                             :Resource.id       [ :value [ rr:column "person_id" ] ] ;
@@ -25,7 +25,7 @@
                           ] .
 
 [] # provider -> :Practitioner
-    rr:logicalTable       [ rr:tableName "omop.provider" ] ;
+    rr:logicalTable       [ rr:tableName "provider" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ;
     rr:predicateObjectMap [ a                  :Paractitioner ;
                             :Resource.id       [ :value [ rr:column "provider_id" ] ] ;
@@ -40,7 +40,7 @@
 
 
 [] # provider -> :PractitionerRole
-    rr:logicalTable       [ rr:tableName "omop.provider" ] ;
+    rr:logicalTable       [ rr:tableName "provider" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/PractitionerRole/{provider_id}" ] ;
     rr:predicateObjectMap [ a                  :PactitionerRole ;
                             :Resource.id       [ :value [ rr:column "provider_id" ] ] ;
@@ -52,7 +52,7 @@
 
 
 [] # care_site -> :Location
-    rr:logicalTable       [ rr:tableName "omop.care_site" ] ;
+    rr:logicalTable       [ rr:tableName "care_site" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Location/{care_site_id}" ] ;
     rr:predicateObjectMap [ a                  :Location ;
                             :Resource.id       [ :value [ rr:column "care_site_id" ] ] ;
@@ -64,7 +64,7 @@
 
 
 [] # care_site -> :Organization
-    rr:logicalTable       [ rr:tableName "omop.care_site" ] ;
+    rr:logicalTable       [ rr:tableName "care_site" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Organization/{care_site_id}" ] ;
     rr:predicateObjectMap [ a                  :Location ;
                             :Resource.id       [ :value [ rr:column "care_site_id" ] ] ;
@@ -77,7 +77,7 @@
 
 
 [] # location -> :Location
-    rr:logicalTable       [ rr:tableName "omop.location" ] ;
+    rr:logicalTable       [ rr:tableName "location" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Location/{location_id}" ] ;
     rr:predicateObjectMap [ a                  :Location ;
                             :Resource.id       [ :value [ rr:column "location_id" ] ] ;
@@ -94,7 +94,7 @@
 
 
 [] # condition_occurrence -> :Condition
-    rr:logicalTable       [ rr:tableName "omop.condition_occurrence" ] ;
+    rr:logicalTable       [ rr:tableName "condition_occurrence" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}" ] ;
     rr:predicateObjectMap [ a                            :Condition ;
                             :Resource.id                 [ :value [ rr:column "condition_occurrence_id" ] ] ;
@@ -113,7 +113,7 @@
                             ].
 
 [] # visit_occurrence -> :Encounter
-    rr:logicalTable       [ rr:tableName "omop.visit_occurrence" ] ;
+    rr:logicalTable       [ rr:tableName "visit_occurrence" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Encounter/{visit_occurrence_id}" ] ;
     rr:predicateObjectMap [ a                            :Procedure ;
                             :Resource.id                 [ :value [ rr:column "visit_occurrence_id" ] ] ;
@@ -132,7 +132,7 @@
         
 
 [] # procedure_occurrence -> :Procedure
-    rr:logicalTable       [ rr:tableName "omop.procedure_occurrence" ] ;
+    rr:logicalTable       [ rr:tableName "procedure_occurrence" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Procedure/{procedure_occurrence_id}" ] ;
     rr:predicateObjectMap [ a                            :Procedure ;
                             :Resource.id                 [ :value [ rr:column "procedure_occurrence_id" ] ] ;
@@ -151,7 +151,7 @@
                              ] .
 
 [] # drug_exposure -> :MedicationStatement
-    rr:logicalTable       [ rr:tableName "omop.drug_exposure" ] ;
+    rr:logicalTable       [ rr:tableName "drug_exposure" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/MedicationStatement/{drug_exposure_id}" ] ;
     rr:predicateObjectMap [ a                            :Procedure ;
                             :Resource.id                 [ :value [ rr:column "drug_exposure_id" ] ] ;
@@ -178,7 +178,7 @@
 
 
 [] # measurement -> :Observation
-    rr:logicalTable       [ rr:tableName "omop.measurement" ] ;
+    rr:logicalTable       [ rr:tableName "measurement" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Observation/{measurement_id}" ] ;
     rr:predicateObjectMap [ a                            :Observation ;
                             :Resource.id                 [ :value [ rr:column "measurement_id" ] ] ;
@@ -204,7 +204,7 @@
 
 
 [ ] # concept -> :Coding
-    rr:logicalTable       [ rr:tableName "omop.concept" ] ;
+    rr:logicalTable       [ rr:tableName "concept" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id}" ] ;
     rr:predicateObjectMap [ a               :Coding ;
                             :Resource.id    [ :value [ rr:column   "concept_id" ;
