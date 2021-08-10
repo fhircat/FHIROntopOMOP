@@ -97,6 +97,8 @@ public class TurtleTemplateConverter {
         List<Statement> stmts = conn.getStatements(node, null, null).stream().toList();
         //stmts.forEach(x -> System.out.printf("[%d]  %s %s%n", level, subject, x));
         //System.out.println(stmts);
+        // TODO: rr:termType
+        // TODO: rr:language
         for (Statement stmt : stmts) {
             Value object = stmt.getObject();
             IRI predicate = stmt.getPredicate();
@@ -108,11 +110,16 @@ public class TurtleTemplateConverter {
                         new TermMap(iriObject.stringValue(), Mapping.TermType.IRI, TermMapType.CONSTANT)
                 ));
             }
-            if (object instanceof BNode bnode) {
+            else if (object instanceof Literal literal) {
+                //System.out.printf("-> %s %s %s %n", subject, predicate, iriObject);
+                triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap,
+                        new TermMap(literal.stringValue(), Mapping.TermType.LITERAL, TermMapType.CONSTANT, literal.getDatatype().stringValue())
+                ));
+            }
+            else if (object instanceof BNode bnode) {
                 boolean terminal = false;
                 Optional<Value> column = getObject(conn, bnode, RR_COLUMN);
-                // TODO: rr:termType
-                // TODO: rr:language
+                
                 if (column.isPresent()) {
                     //System.out.printf("-> %s %s {%s} %n", subject, predicate, column.get());
                     terminal = true;

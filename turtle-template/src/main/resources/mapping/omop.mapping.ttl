@@ -9,7 +9,7 @@
 	        WHEN "gender_source_value" LIKE 'F' or "gender_source_value" LIKE 'female' THEN 'female'
 			ELSE 'other' 
 		END AS gender
-    FROM omop.person''' ] ;
+    FROM person''' ] ;
     rr:subjectMap         [ rr:template "https://example.org/Patient/{person_id}" ] ;
     rr:predicateObjectMap [ a                  :Patient ;
                             :Resource.id       [ :value [ rr:column "person_id" ] ] ;
@@ -18,7 +18,7 @@
                                                           rr:datatype xsd:dateTime ] ] ; ] .
 
 [] # condition_occurrence -> :Condition
-    rr:logicalTable       [ rr:tableName "omop.condition_occurrence" ] ;
+    rr:logicalTable       [ rr:tableName "condition_occurrence" ] ;
     rr:subjectMap         [ rr:template "https://example.org/Condition/{condition_occurrence_id}" ] ;
     rr:predicateObjectMap [ a                            :Condition ;
                             :Resource.id                 [ :value [ rr:column "condition_occurrence_id" ] ] ;
@@ -33,8 +33,8 @@
                             :Condition.abatementDateTime [ :value [ rr:column   "condition_end_datetime" ;
                                                                     rr:datatype xsd:dateTime ] ] ; ] .
 
-[ ] # concept -> :Coding
-    rr:logicalTable       [ rr:tableName "omop.concept" ] ;
+[] # concept -> :Coding
+    rr:logicalTable       [ rr:tableName "concept" ] ;
     rr:subjectMap         [ rr:template "https://example.org/CodeableConcept.coding/{concept_id}" ] ;
     rr:predicateObjectMap [ a               :Coding ;
                             :Resource.id    [ :value [ rr:column   "concept_id" ;
