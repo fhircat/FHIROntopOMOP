@@ -29,8 +29,8 @@
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ;
     rr:predicateObjectMap [ a                  :Paractitioner ;
                             :Resource.id       [ :value [ rr:column "provider_id" ] ] ;
-                            :Practitioner.identifier [ :value [  rr:coumn "npi" ] ] ;
-                            :Practitioner.name [ :value [  rr:coumn "name" ] ] ;
+                            :Practitioner.identifier [ :value [  rr:column "npi" ] ] ;
+                            :Practitioner.name [ :value [  rr:column "name" ] ] ;
                             :Practitioner.gender    [ :CodeableConcept.coding [ rr:termType rr:IRI ;
                                                                         rr:template "http://hl7.org/fhir/CodeableConcept.coding/{gender_concept_id}" ] ] ;
                             :Practitioner.birthDate [ :value [ rr:column   "year_of_birth" ; ## only year of birth
@@ -81,12 +81,12 @@
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Location/{location_id}" ] ;
     rr:predicateObjectMap [ a                  :Location ;
                             :Resource.id       [ :value [ rr:column "location_id" ] ] ;
-                            :Location.address       [ :Location.Adress.line [:value [ rr:column "address_1" ] ] ] ;
-                                                    [ :Location.Adress.line [:value [ rr:column "address_2" ] ] ] ;
-                                                    [ :Location.Adress.city [:value [ rr:column "city" ] ] ] ;
-                                                    [ :Location.Adress.state [:value [ rr:column "state" ] ] ] ;
-                                                    [ :Location.Adress.postalCode [:value [ rr:column "zip" ] ] ] ;
-                                                    [ :Location.Adress.country [:value [ rr:column "country" ] ] ] ;
+                            :Location.address       [ :Address.line [:value [ rr:column "address_1" ] ]  ;
+                                                     :Address.line [:value [ rr:column "address_2" ] ]  ;
+                                                     :Address.city [:value [ rr:column "city" ] ]  ;
+                                                     :Address.state [:value [ rr:column "state" ] ]  ;
+                                                     :Address.postalCode [:value [ rr:column "zip" ] ] ;
+                                                     :Address.country [:value [ rr:column "country" ] ]  ;]
                                  
                           ] .
 
@@ -117,7 +117,7 @@
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Encounter/{visit_occurrence_id}" ] ;
     rr:predicateObjectMap [ a                            :Procedure ;
                             :Resource.id                 [ :value [ rr:column "visit_occurrence_id" ] ] ;
-                            :Encounter.status            [ :value [ "finished" ] ] ; ## to be implemented
+                            :Encounter.status            [ :value  "finished"  ] ; ## to be implemented
                             :Encounter.type              [ :CodeableConcept.coding [ rr:termType rr:IRI ;
                                                                                      rr:template "http://hl7.org/fhir/CodeableConcept.coding/{visit_concept_id}" ] ] ;
                             :Encounter.class          [ :CodeableConcept.coding [ rr:termType rr:IRI ;
@@ -125,8 +125,8 @@
                             :Encounter.subject           [ rr:termType rr:IRI ;
                                                            rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ;
                             :Encounter.period     [ :Period.start [:value [ rr:column   "visit_start_datetime" ;
-                                                                   rr:datatype xsd:dateTime ] ] ] ;
-                                                  [ :Period.end [:value [ rr:column   "visit_end_datetime" ;
+                                                                   rr:datatype xsd:dateTime ] ]  ;
+                                                   :Period.end [:value [ rr:column   "visit_end_datetime" ;
                                                                    rr:datatype xsd:dateTime ] ] ] ;                  
                              ] .
         
@@ -155,8 +155,8 @@
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/MedicationStatement/{drug_exposure_id}" ] ;
     rr:predicateObjectMap [ a                            :Procedure ;
                             :Resource.id                 [ :value [ rr:column "drug_exposure_id" ] ] ;
-                            :MedicationStatement.status            [ :value [ "completed" ] ] ; ## to be implemented
-                            :MedicationStatement.statusReason      :value [ rr:column "stop_reason" ] ] ; ## expect codeableConcept but ...
+                            :MedicationStatement.status            [ :value  "completed"  ] ; ## to be implemented
+                            :MedicationStatement.statusReason      [ :value [ rr:column "stop_reason" ] ] ; ## expect codeableConcept but ...
                             :MedicationStatement.medicationCodeableConcept              [ :CodeableConcept.coding [ rr:termType rr:IRI ;
                                                                                      rr:template "http://hl7.org/fhir/CodeableConcept.coding/{drug_concept_id}" ] ] ;
                             :MedicationStatement.category          [ :CodeableConcept.coding [ rr:termType rr:IRI ;
@@ -165,14 +165,16 @@
                                                            rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ;
                             :MedicationStatement.context           [ rr:termType rr:IRI ;
                                                            rr:template "http://hl7.org/fhir/Encounter/{visit_occurrence_id}" ] ;
+                            :MedicationStatement.context           [ rr:termType rr:IRI ;
                                                            rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ;
                             :MedicationStatement.effectivePeriod     [ :Period.start [:value [ rr:column   "drug_exposure_start_datetime" ;
-                                                                   rr:datatype xsd:dateTime ] ] ] ;
-                                                                     [ :Period.end [:value [ rr:column   "drug_exposure_end_datetime" ;
-                                                                   rr:datatype xsd:dateTime ] ] ] ;                  
+                                                                   rr:datatype xsd:dateTime ] ]  ;
+                                                                      :Period.end [:value [ rr:column   "drug_exposure_end_datetime" ;
+                                                                   rr:datatype xsd:dateTime ] ] ] 
+                          ] .  
+                          
                            
                             
-                             ] .
 
 
 [] # measurement -> :Observation
@@ -194,10 +196,10 @@
                                                                                                   rr:template "http://hl7.org/fhir/CodeableConcept.coding/{value_as_concept_id}" ] ] ;
                             :Observation.valueString         [ :value [ rr:column   "value_as_number" ;
                                                                        rr:datatype xsd:string ] ] ; 
-                            :Observation.valueQuantity         [ :Quantity [ :value [:value [ rr:column   "value_as_number" ] ] ] ;
-                                                                           [ :unit  [:value [ rr:column "unit_concept_id"   ] ] ] ; ## to be discussed
-                            :Observation.referenceRange [ :Observation.referenceRange.low [:value [rr:column   "range_low" ] ] ] ;  
-                                                        [ :Observation.referenceRange.high [:value [rr:column   "range_high" ] ] ] ;                                                                      
+                            :Observation.valueQuantity        [ :Quantity.value [:value [ rr:column   "value_as_number" ] ]  ;
+                                                                    :Quantity.unit  [:value [ rr:column "unit_concept_id"   ] ] ] ; ## to be discussed
+                            :Observation.referenceRange [ :Observation.referenceRange.low [:value [rr:column   "range_low" ] ]  ;  
+                                                         :Observation.referenceRange.high [:value [rr:column   "range_high" ] ] ] ;                                                                      
                              ] .
 
 
