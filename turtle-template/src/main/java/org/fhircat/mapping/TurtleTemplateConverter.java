@@ -97,11 +97,10 @@ public class TurtleTemplateConverter {
         List<Statement> stmts = conn.getStatements(node, null, null).stream().toList();
         //stmts.forEach(x -> System.out.printf("[%d]  %s %s%n", level, subject, x));
         //System.out.println(stmts);
-        // TODO: rr:termType
-        // TODO: rr:language
         for (Statement stmt : stmts) {
-            Value object = stmt.getObject();
+            // TODO: validation. check if the predicate is from the ontology
             IRI predicate = stmt.getPredicate();
+            Value object = stmt.getObject();
             TermMap predicateTermMap = new TermMap(predicate.stringValue(), Mapping.TermType.IRI, TermMapType.CONSTANT);
 
             if (object instanceof IRI iriObject) {
@@ -119,11 +118,12 @@ public class TurtleTemplateConverter {
             else if (object instanceof BNode bnode) {
                 boolean terminal = false;
                 Optional<Value> column = getObject(conn, bnode, RR_COLUMN);
-                
                 if (column.isPresent()) {
                     //System.out.printf("-> %s %s {%s} %n", subject, predicate, column.get());
                     terminal = true;
                     String datatype = getObject(conn, bnode, RR_DATATYPE).orElse(XSD.STRING).stringValue();
+                    // TODO: rr:termType
+                    // TODO: rr:language
                     TermMap objectTermMap = new TermMap(column.get().stringValue(),
                             Mapping.TermType.LITERAL, TermMapType.COLUMN, datatype);
                     triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap, objectTermMap));
@@ -133,6 +133,8 @@ public class TurtleTemplateConverter {
                 if (template.isPresent()) {
                     terminal = true;
                     //System.out.printf("-> %s %s %s %n", subject, predicate, template.get());
+                    // TODO: rr:termType
+                    // TODO: rr:language
                     triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap,
                             new TermMap(template.get().stringValue(), Mapping.TermType.IRI, TermMapType.TEMPLATE)
                     ));

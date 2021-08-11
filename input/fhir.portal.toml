@@ -109,3 +109,23 @@ UNION
 }
 }
 """
+
+[[tabGroups.tabs]]
+name="Condition"
+query="""
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX fhir: <http://hl7.org/fhir/>
+
+SELECT DISTINCT * WHERE {
+    ?p a   fhir:Practitioner ;
+         fhir:Resource.id                [ fhir:value ?id ]  ;
+#        fhir:Practitioner.identifier    [ fhir:value ?identifier ] ;
+#        fhir:Practitioner.name          [ fhir:value ?name ]  ; # FIXME: used to be `name`. provider_name is always NULL in the DB
+#        fhir:Practitioner.gender        ?gender  ;
+ #       fhir:Practitioner.birthDate     [ fhir:value ?birth_date ] ; # FIXME: NULL since year_of_birth is always NULL                               
+#        fhir:Practitioner.qualification [ fhir:Practitioner.qualification.identifier [ fhir:Identifier.value [ fhir:value ?qualification ] ] ]  .
+}
+"""
