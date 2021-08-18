@@ -3,6 +3,7 @@ package org.fhircat.mapping;
 import java.util.List;
 import java.util.Objects;
 
+import static eu.optique.r2rml.api.model.R2RMLVocabulary.*;
 import static java.util.stream.Collectors.joining;
 
 public record Mapping(List<String> prefixes, List<Entry> entries) {
@@ -37,7 +38,17 @@ public record Mapping(List<String> prefixes, List<Entry> entries) {
     }
 
     public enum TermType {
-        IRI, BNODE, LITERAL
+        IRI, BNODE, LITERAL;
+        
+        static TermType fromIRI(String iri) {
+            return switch (iri) {
+                case TERM_IRI -> IRI;
+                case TERM_BLANK_NODE -> BNODE;
+                case TERM_LITERAL -> LITERAL;
+                default -> throw new IllegalArgumentException("unknown term type " + iri);
+            };
+
+        }
     }
 
     public record TermMap(String value, TermType type, TermMapType mapType, String datatype) {

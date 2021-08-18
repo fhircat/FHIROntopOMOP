@@ -204,4 +204,41 @@
                             :Coding.system  [ :value [ rr:column   "vocabulary_id" ;
                                                        rr:datatype xsd:string ] ] ; ] .
 
+[ ] # concept_relationship -> :ConceptMap
+    rr:logicalTable       [ rr:tableName "concept_relationship" ] ;
+    rr:subjectMap         [ rr:template "http://hl7.org/fhir/ConceptMap/{concept_id_1}-{concept_id_2}" ] ;
+    rr:predicateObjectMap [ a                                            :ConceptMap ;
+                            :Resource.id                                 [ :value [ rr:template "{concept_id_1}-{concept_id_2}" ; #to be discussed
+                                                                                    rr:datatype xsd:string ] ] ;
+                            :ConceptMap.sourceUri                        [ rr:termType rr:IRI ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id_1}" ] ;
+                            :ConceptMap.targetUri                        [ rr:termType rr:IRI ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id_2}" ] ;
+                            :ConceptMap.group.source                     [ rr:termType rr:IRI ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id_1}" ] ;
+                            :ConceptMap.group.target                     [ rr:termType rr:IRI ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id_2}" ] ;
+                            :ConceptMap.group.element.target.equivalence [ :value [ rr:column   "relationship_id" ;
+                                                                                    rr:datatype xsd:string ] ] ; 
+                          ]
+.
+
+[ ] # concept_ancestor -> :ConceptMap
+    rr:logicalTable       [ rr:tableName "concept_ancestor" ] ;
+    rr:subjectMap         [ rr:template "http://hl7.org/fhir/ConceptMap/{ancestor_concept_id}-{descendant_concept_id}" ] ;
+    rr:predicateObjectMap [ a                                            :ConceptMap ;
+                            :Resource.id                                 [ :value [ rr:template "{concept_id_1}-{concept_id_2}" ; #to be discussed
+                                                                                    rr:datatype xsd:string ] ] ;
+                            :ConceptMap.sourceUri                        [ rr:termType rr:IRI ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{ancestor_concept_id}" ] ;
+                            :ConceptMap.targetUri                        [ rr:termType rr:IRI ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{descendant_concept_id}" ] ;
+                            :ConceptMap.group.source                     [ rr:termType rr:IRI ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{ancestor_concept_id}" ] ;
+                            :ConceptMap.group.target                     [ rr:termType rr:IRI ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{descendant_concept_id}" ] ;
+                            :ConceptMap.group.element.target.equivalence [ :value      "subsumes" ;
+                                                                           rr:datatype xsd:string ] ; ] .
+
+
 

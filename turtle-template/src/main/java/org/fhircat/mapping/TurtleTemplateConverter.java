@@ -9,6 +9,7 @@ import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.sail.memory.MemoryStore;
 import org.fhircat.mapping.Mapping.TermMap;
+import org.fhircat.mapping.Mapping.TermMapType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -19,8 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import org.fhircat.mapping.Mapping.TermMapType;
 
 import static org.eclipse.rdf4j.model.util.Values.iri;
 
@@ -34,6 +33,7 @@ public class TurtleTemplateConverter {
     private static final IRI RR_TEMPLATE = iri(R2RMLVocabulary.PROP_TEMPLATE);
     private static final IRI RR_COLUMN = iri(R2RMLVocabulary.PROP_COLUMN);
     private static final IRI RR_DATATYPE = iri(R2RMLVocabulary.PROP_DATATYPE);
+    private static final IRI RR_TERM_TYPE = iri(R2RMLVocabulary.PROP_TERM_TYPE);
 
 
     static List<String> PREFIXES = Arrays.asList("""
@@ -108,24 +108,35 @@ public class TurtleTemplateConverter {
                 triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap,
                         new TermMap(iriObject.stringValue(), Mapping.TermType.IRI, TermMapType.CONSTANT)
                 ));
-            }
-            else if (object instanceof Literal literal) {
+            } else if (object instanceof Literal literal) {
                 //System.out.printf("-> %s %s %s %n", subject, predicate, iriObject);
                 triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap,
                         new TermMap(literal.stringValue(), Mapping.TermType.LITERAL, TermMapType.CONSTANT, literal.getDatatype().stringValue())
                 ));
-            }
-            else if (object instanceof BNode bnode) {
+            } else if (object instanceof BNode bnode) {
                 boolean terminal = false;
+                Mapping.TermType termType = null;
+                Optional<Value> optionalDatatype = getObject(conn, bnode, RR_DATATYPE);
+                if (optionalDatatype.isPresent()) {
+                    termType = Mapping.TermType.LITERAL;
+                }
+
+                Optional<Value> optionalTermType = getObject(conn, bnode, RR_TERM_TYPE);
+                if(optionalTermType.isPresent()) {
+                    termType = Mapping.TermType.fromIRI(optionalTermType.get().stringValue());
+                }
+
                 Optional<Value> column = getObject(conn, bnode, RR_COLUMN);
                 if (column.isPresent()) {
                     //System.out.printf("-> %s %s {%s} %n", subject, predicate, column.get());
                     terminal = true;
-                    String datatype = getObject(conn, bnode, RR_DATATYPE).orElse(XSD.STRING).stringValue();
-                    // TODO: rr:termType
+                    String datatype = optionalDatatype.orElse(XSD.STRING).stringValue();
                     // TODO: rr:language
+                    if (termType == null){
+                        termType = Mapping.TermType.LITERAL;    
+                    }
                     TermMap objectTermMap = new TermMap(column.get().stringValue(),
-                            Mapping.TermType.LITERAL, TermMapType.COLUMN, datatype);
+                            termType, TermMapType.COLUMN, datatype);
                     triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap, objectTermMap));
                 }
 
@@ -133,10 +144,12 @@ public class TurtleTemplateConverter {
                 if (template.isPresent()) {
                     terminal = true;
                     //System.out.printf("-> %s %s %s %n", subject, predicate, template.get());
-                    // TODO: rr:termType
+                    if (termType == null){
+                        termType = Mapping.TermType.IRI;
+                    }
                     // TODO: rr:language
                     triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap,
-                            new TermMap(template.get().stringValue(), Mapping.TermType.IRI, TermMapType.TEMPLATE)
+                            new TermMap(template.get().stringValue(), termType, TermMapType.TEMPLATE)
                     ));
                 }
 
