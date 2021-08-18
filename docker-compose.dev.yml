@@ -4,7 +4,7 @@ services:
   ontop:    
 #    env_file: .env
     image: ontop/ontop-endpoint:latest
-    restart: unless-stopped
+#    restart: unless-stopped
     environment:
       ONTOP_ONTOLOGY_FILE: /opt/ontop/input/fhir.ttl
 #      ONTOP_XML_CATALOG_FILE: /opt/ontop/input/catalog-v001.xml
@@ -15,6 +15,7 @@ services:
       ONTOP_PORTAL_FILE: /opt/ontop/input/fhir.portal.toml      
       ONTOP_CORS_ALLOWED_ORIGINS: "*"
       ONTOP_DEV_MODE: "true"
+      ONTOP_DEBUG: "true"
     volumes:
       - ./input:/opt/ontop/input
       - ./jdbc:/opt/ontop/jdbc

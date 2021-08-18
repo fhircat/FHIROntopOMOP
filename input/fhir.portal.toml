@@ -129,3 +129,15 @@ SELECT DISTINCT * WHERE {
 #        fhir:Practitioner.qualification [ fhir:Practitioner.qualification.identifier [ fhir:Identifier.value [ fhir:value ?qualification ] ] ]  .
 }
 """
+
+[[tabGroups.tabs]]
+name="ConceptMap"
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX fhir: <http://hl7.org/fhir/>
+SELECT * WHERE {
+  ?sub a fhir:ConceptMap .
+} 
+LIMIT 100
+"""
