@@ -139,7 +139,7 @@
         WHERE condition_occurrence.condition_status_concept_id = concept.concept_id""" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}" ] ;
     rr:predicateObjectMap [ a                            :Condition ;
-                            :Condition.clinicalStatus     [ :value [ rr:column "clinicalStatus" ] ] ;  # condition_status_concept_id to String - need a SQL query like gender
+                            :Condition.clinicalStatus     [ :value [ rr:column "clinicalStatus" ] ] ; 
                           ] .
 
 [] # procedure_occurrence -> :Procedure

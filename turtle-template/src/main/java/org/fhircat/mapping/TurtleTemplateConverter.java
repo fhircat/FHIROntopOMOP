@@ -116,21 +116,26 @@ public class TurtleTemplateConverter {
             } else if (object instanceof BNode bnode) {
                 boolean terminal = false;
                 Mapping.TermType termType = null;
+                String datatype;
                 Optional<Value> optionalDatatype = getObject(conn, bnode, RR_DATATYPE);
                 if (optionalDatatype.isPresent()) {
                     termType = Mapping.TermType.LITERAL;
+                    datatype = optionalDatatype.get().stringValue();
+                } else {
+                    datatype = XSD.STRING.stringValue();
                 }
 
                 Optional<Value> optionalTermType = getObject(conn, bnode, RR_TERM_TYPE);
                 if(optionalTermType.isPresent()) {
                     termType = Mapping.TermType.fromIRI(optionalTermType.get().stringValue());
                 }
-
+                
                 Optional<Value> column = getObject(conn, bnode, RR_COLUMN);
+                
                 if (column.isPresent()) {
                     //System.out.printf("-> %s %s {%s} %n", subject, predicate, column.get());
                     terminal = true;
-                    String datatype = optionalDatatype.orElse(XSD.STRING).stringValue();
+                    
                     // TODO: rr:language
                     if (termType == null){
                         termType = Mapping.TermType.LITERAL;    
@@ -144,12 +149,13 @@ public class TurtleTemplateConverter {
                 if (template.isPresent()) {
                     terminal = true;
                     //System.out.printf("-> %s %s %s %n", subject, predicate, template.get());
+                    //String datatype = optionalDatatype.orElse(XSD.STRING).stringValue();
                     if (termType == null){
                         termType = Mapping.TermType.IRI;
                     }
                     // TODO: rr:language
                     triples.add(new Mapping.Triple(subjectTermMap, predicateTermMap,
-                            new TermMap(template.get().stringValue(), termType, TermMapType.TEMPLATE)
+                            new TermMap(template.get().stringValue(), termType, TermMapType.TEMPLATE, datatype)
                     ));
                 }
 

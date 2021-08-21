@@ -68,8 +68,19 @@ public record Mapping(List<String> prefixes, List<Entry> entries) {
                 case IRI -> "<" + lexical + ">";
                 case BNODE -> "_:" + lexical;
                 case LITERAL -> {
-                    String dt = datatype == null ? "" : "^^<" + datatype + ">";
-                    yield "\"%s\"%s".formatted(lexical, dt);
+                    if(mapType == TermMapType.COLUMN) {
+                        if (datatype == null) {
+                            yield lexical;
+                        } else {
+                            yield "\"%s\"^^<%s>".formatted(lexical, datatype);
+                        }
+                    } else { // TEMPLATE or CONSTANT
+//                        if (datatype == null) {
+//                            yield lexical;
+//                        } else {
+                            yield "\"%s\"^^<%s>".formatted(lexical, datatype);
+                        //}
+                    }
                 }
             };
         }
