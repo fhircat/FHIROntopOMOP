@@ -21,6 +21,24 @@ LIMIT 10
 """
 
 [[tabGroups.tabs]]
+name="DESCRIBE a Patient"
+query="""
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+DESCRIBE ?p ?o
+WHERE {
+    ?p a fhir:Patient ; fhir:Resource.id [ fhir:value "392776922" ]  .
+  	?p ?e ?o .
+}
+"""
+
+[[tabGroups.tabs]]
 
 name="Condition"
 query="""
@@ -111,7 +129,7 @@ UNION
 """
 
 [[tabGroups.tabs]]
-name="Condition"
+name="Practitioner"
 query="""
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -120,13 +138,30 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
 
 SELECT DISTINCT * WHERE {
-    ?p a   fhir:Practitioner ;
-         fhir:Resource.id                [ fhir:value ?id ]  ;
-#        fhir:Practitioner.identifier    [ fhir:value ?identifier ] ;
-#        fhir:Practitioner.name          [ fhir:value ?name ]  ; # FIXME: used to be `name`. provider_name is always NULL in the DB
-#        fhir:Practitioner.gender        ?gender  ;
- #       fhir:Practitioner.birthDate     [ fhir:value ?birth_date ] ; # FIXME: NULL since year_of_birth is always NULL                               
-#        fhir:Practitioner.qualification [ fhir:Practitioner.qualification.identifier [ fhir:Identifier.value [ fhir:value ?qualification ] ] ]  .
+    ?p a   fhir:Practitioner .
+	OPTIONAL {?p  fhir:Resource.id                [ fhir:value ?id ]  .}
+	OPTIONAL {?p  fhir:Practitioner.identifier    [ fhir:value ?identifier ] }
+	OPTIONAL {?p  fhir:Practitioner.name          [ fhir:value ?name ]  .}
+	OPTIONAL {?p  fhir:Practitioner.gender        ?gender  . }
+	OPTIONAL {?p  fhir:Practitioner.birthDate     [ fhir:value ?birth_date ] . }                               
+	OPTIONAL {?p  fhir:Practitioner.qualification [ fhir:Practitioner.qualification.identifier [ fhir:Identifier.value [ fhir:value ?qualification ] ] ]  .}
+}
+LIMIT 100
+"""
+
+[[tabGroups.tabs]]
+name="Encounter"
+query="""
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX fhir: <http://hl7.org/fhir/>
+
+DESCRIBE ?p ?o WHERE {
+    ?p a   fhir:Encounter .
+	?p  fhir:Resource.id  [ fhir:value "541" ]  .
+  ?p ?e ?o
 }
 """
 
