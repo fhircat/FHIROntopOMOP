@@ -3,7 +3,7 @@ version: "3.4"
 services:
   ontop:    
 #    env_file: .env
-    image: ontop/ontop-endpoint:latest
+    image: ontop/ontop-endpoint:4.2-SNAPSHOT
 #    restart: unless-stopped
     environment:
       ONTOP_ONTOLOGY_FILE: /opt/ontop/input/fhir.ttl
