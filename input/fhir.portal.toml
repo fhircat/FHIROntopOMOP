@@ -11,6 +11,7 @@ query="""
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX w5: <http://hl7.org/fhir/w5#>
 
 SELECT * WHERE {
     ?sub a fhir:Patient .
@@ -28,7 +29,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xml: <http://www.w3.org/XML/1998/namespace>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX fhir: <http://hl7.org/fhir/>
-PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX w5: <http://hl7.org/fhir/w5#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 DESCRIBE ?p ?o
@@ -47,6 +48,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX w5: <http://hl7.org/fhir/w5#>
 
 SELECT DISTINCT ?patient ?code ?system ?display WHERE {
     ?condition a fhir:Condition .
@@ -72,6 +74,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX w5: <http://hl7.org/fhir/w5#>
 
 SELECT DISTINCT ?code ?system ?display (count(?patient) as ?count) WHERE {
     ?condition a fhir:Condition .
@@ -96,6 +99,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX w5: <http://hl7.org/fhir/w5#>
 
 SELECT DISTINCT ?patient ?code ?system ?display WHERE {
 {
@@ -136,6 +140,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX w5: <http://hl7.org/fhir/w5#>
 
 SELECT DISTINCT * WHERE {
     ?p a   fhir:Practitioner .
@@ -156,6 +161,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX w5: <http://hl7.org/fhir/w5#>
 
 DESCRIBE ?p ?o WHERE {
     ?p a   fhir:Procedure .
@@ -172,6 +178,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX w5: <http://hl7.org/fhir/w5#>
 
 DESCRIBE ?p ?o WHERE {
     ?p a   fhir:Encounter .
@@ -186,6 +193,8 @@ query="""
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX w5: <http://hl7.org/fhir/w5#>
+
 SELECT * WHERE {
   ?sub a fhir:ConceptMap .
 } 
