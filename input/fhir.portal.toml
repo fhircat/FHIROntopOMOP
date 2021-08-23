@@ -188,7 +188,7 @@ DESCRIBE ?p ?o WHERE {
 """
 
 [[tabGroups.tabs]]
-name="ConceptMap"
+name="ConceptMap (subsumes)"
 query="""
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -196,7 +196,20 @@ PREFIX fhir: <http://hl7.org/fhir/>
 PREFIX w5: <http://hl7.org/fhir/w5#>
 
 SELECT * WHERE {
-  ?sub a fhir:ConceptMap .
+	?map a fhir:ConceptMap ;
+	    fhir:ConceptMap.sourceUri ?source ;
+	    fhir:ConceptMap.targetUri ?target ;
+	    fhir:ConceptMap.group.element.target.equivalence [fhir:value "subsumes"] .
+	?source fhir:CodeableConcept.coding [  fhir:Coding.code    [ fhir:value ?source_code ] ;
+                                           fhir:Coding.display [ fhir:value ?source_name ]  ;
+                                           fhir:Coding.system  [ fhir:value ?source_system ]  ; ] ;
+		    fhir:CodeableConcept.text   [ fhir:value  ?source_text]  .
+	?target fhir:CodeableConcept.coding [  fhir:Coding.code    [ fhir:value ?target_code ] ;
+                                           fhir:Coding.display [ fhir:value ?target_name ]  ;
+                                           fhir:Coding.system  [ fhir:value ?target_system ]  ; ] ;
+		    fhir:CodeableConcept.text   [ fhir:value  ?target_text]  .
+    FILTER(?source != ?target)
+    FILTER(?source_system != ?target_system) 
 } 
 LIMIT 100
 """

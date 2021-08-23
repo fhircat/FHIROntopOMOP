@@ -83,7 +83,7 @@
                                                 :Address.city       [ :value [ rr:column "city" ] ] ;
                                                 :Address.state      [ :value [ rr:column "state" ] ] ;
                                                 :Address.postalCode [ :value [ rr:column "zip" ] ] ;
-                                                :Address.country    [ :value [ rr:column "county" ] ] ; ] # TODO: the column name is  county NOT country
+                                                :Address.country    [ :value [ rr:column "county" ] ] ; ] # TODO: the column name is county NOT country
                           ] .
 
 
@@ -158,7 +158,7 @@
                             :Procedure.performedDateTime [ :value [ rr:column   "procedure_datetime" ;
                                                                     rr:datatype xsd:dateTime ] ] ; 
                             :Procedure.performer         [ rr:termType rr:IRI ;
-                                                           rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ; # to be implemented
+                                                           rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ; 
                                                                     
                             ] .
 
@@ -167,7 +167,7 @@
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/MedicationStatement/{drug_exposure_id}" ] ;
     rr:predicateObjectMap [ a                                              :Procedure ;
                             :Resource.id                                   [ :value [ rr:column "drug_exposure_id" ] ] ;
-                            :MedicationStatement.status                    [ :value "completed" ] ; ## to be implemented
+                            :MedicationStatement.status                    [ :value "completed" ] ; 
                             :MedicationStatement.statusReason              [ :value [ rr:column "stop_reason" ] ] ; ## expect codeableConcept but ... ## TODO: stop_reason is always NULL
                             :MedicationStatement.medicationCodeableConcept [ rr:termType rr:IRI ;
                                                                              rr:template "http://hl7.org/fhir/CodeableConcept/{drug_concept_id}" ] ;
@@ -185,7 +185,8 @@
 
 
 [] # measurement -> :Observation
-    rr:logicalTable       [ rr:sqlQuery  "SELECT measurement.*, concept_name AS measurement_unit FROM measurement, concept WHERE measurement.unit_concept_id = concept.concept_id" ] ;
+    rr:logicalTable       [ rr:sqlQuery
+                                    "SELECT measurement.*, concept_name AS measurement_unit FROM measurement, concept WHERE measurement.unit_concept_id = concept.concept_id" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Observation/{measurement_id}" ] ;
     rr:predicateObjectMap [ a                                 :Observation ;
                             :Resource.id                      [ :value [ rr:column "measurement_id" ] ] ;
@@ -206,34 +207,27 @@
                             :Observation.valueQuantity        [ :Quantity.value [ :value [ rr:column "value_as_number" ] ] ;
                                                                 :Quantity.unit  [ :value [ rr:column "measurement_unit" ] ] ] ; ## done
                             :Observation.referenceRange       [ :Observation.referenceRange.low  [ :value [ rr:column "range_low" ] ] ;
-                                                                :Observation.referenceRange.high [ :value [ rr:column "range_high" ] ] ] ; 
-                            :Observation.performer              [ rr:termType rr:IRI ;
+                                                                :Observation.referenceRange.high [ :value [ rr:column "range_high" ] ] ] ;
+                            :Observation.performer            [ rr:termType rr:IRI ;
                                                                 rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ; # to be implemented
-                            ] .
+                          ] .
 
 
 [ ] # concept -> :CodeableConcept
     rr:logicalTable       [ rr:tableName "concept" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id}" ] ;
-    rr:predicateObjectMap [ a               :CodeableConcept ;
-                            :Resource.id    [ :value [ rr:column   "concept_id" ;
-                                                       rr:datatype xsd:string ] ] ;
-                                                       
-                            :CodeableConcept.coding [
-                            	a               :Coding ;
-                            	:Coding.code    [ :value [ rr:column   "concept_code" ;
-                                                       rr:datatype xsd:string ] ] ;
-                            	:Coding.display [ :value [ rr:column   "concept_name" ;
-                                                       rr:datatype xsd:string  ] ] ;
-                            	:Coding.system  [ :value [ rr:column   "vocabulary_id" ;
-                                                       rr:datatype xsd:string ] ] ;
-                            
-                            ];
-                                                                                                             
-                                                       
-                            :CodeableConcept.text [ :value [ rr:column   "concept_name" ;
-                                                       rr:datatype xsd:string ] ] ;
-                          ] .
+    rr:predicateObjectMap [ a                       :CodeableConcept ;
+                            :Resource.id            [ :value [ rr:column   "concept_id" ;
+                                                               rr:datatype xsd:string ] ] ;
+                            :CodeableConcept.coding [ a               :Coding ;
+                                                      :Coding.code    [ :value [ rr:column   "concept_code" ;
+                                                                                 rr:datatype xsd:string ] ] ;
+                                                      :Coding.display [ :value [ rr:column   "concept_name" ;
+                                                                                 rr:datatype xsd:string ] ] ;
+                                                      :Coding.system  [ :value [ rr:column   "vocabulary_id" ;
+                                                                                 rr:datatype xsd:string ] ] ; ] ;
+                            :CodeableConcept.text   [ :value [ rr:column   "concept_name" ;
+                                                               rr:datatype xsd:string ] ] ; ] .
 
 # [ ] # concept -> :Coding
 #    rr:logicalTable       [ rr:tableName "concept" ] ;
@@ -253,16 +247,16 @@
     rr:logicalTable       [ rr:tableName "concept_relationship" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/ConceptMap/relations/{concept_id_1}/{concept_id_2}" ] ;
     rr:predicateObjectMap [ a                                            :ConceptMap ;
-                            :Resource.id                                 [ :value [ rr:template "{concept_id_1}-{concept_id_2}" ; #to be discussed
+                            :Resource.id                                 [ :value [ rr:template "{concept_id_1}-{concept_id_2}" ; 
                                                                                     rr:datatype xsd:string ] ] ;
                             :ConceptMap.sourceUri                        [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id_1}" ] ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id_1}" ] ;
                             :ConceptMap.targetUri                        [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id_2}" ] ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id_2}" ] ;
                             :ConceptMap.group.source                     [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id_1}" ] ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id_1}" ] ;
                             :ConceptMap.group.target                     [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{concept_id_2}" ] ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id_2}" ] ;
                             :ConceptMap.group.element.target.equivalence [ :value [ rr:column   "relationship_id" ;
                                                                                     rr:datatype xsd:string ] ] ; 
                           ] .
@@ -271,15 +265,15 @@
     rr:logicalTable       [ rr:tableName "concept_ancestor" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/ConceptMap/ancestors/{ancestor_concept_id}/{descendant_concept_id}" ] ;
     rr:predicateObjectMap [ a                                            :ConceptMap ;
-                            :Resource.id                                 [ :value [ rr:template "{ancestor_concept_id}-{descendant_concept_id}" ; #to be discussed
+                            :Resource.id                                 [ :value [ rr:template "{ancestor_concept_id}-{descendant_concept_id}" ; 
                                                                                     rr:datatype xsd:string ] ] ;
                             :ConceptMap.sourceUri                        [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{ancestor_concept_id}" ] ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{ancestor_concept_id}" ] ;
                             :ConceptMap.targetUri                        [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{descendant_concept_id}" ] ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{descendant_concept_id}" ] ;
                             :ConceptMap.group.source                     [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{ancestor_concept_id}" ] ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{ancestor_concept_id}" ] ;
                             :ConceptMap.group.target                     [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept.coding/{descendant_concept_id}" ] ;
+                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{descendant_concept_id}" ] ;
                             :ConceptMap.group.element.target.equivalence [ :value      "subsumes" ;
                                                                            rr:datatype xsd:string ] ; ] .
