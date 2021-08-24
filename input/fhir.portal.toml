@@ -1,5 +1,21 @@
 title="FHIR/OMOP VKG Demo"
 
+[defaultTab]
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX w5: <http://hl7.org/fhir/w5#>
+
+SELECT * WHERE {
+    # ?x a fhir:DomainResource .
+    ?x a fhir:Patient .
+	?x fhir:Resource.id [fhir:value ?id] 
+} 
+LIMIT 100
+"""
+
 [[tabGroups]]
 
 name="Example Queries"
