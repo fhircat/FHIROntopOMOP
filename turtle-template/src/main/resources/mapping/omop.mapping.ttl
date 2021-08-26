@@ -185,8 +185,7 @@
 
 
 [] # measurement -> :Observation
-    rr:logicalTable       [ rr:sqlQuery
-                                    "SELECT measurement.*, concept_name AS measurement_unit FROM measurement, concept WHERE measurement.unit_concept_id = concept.concept_id" ] ;
+    rr:logicalTable       [ rr:tableName "measurement" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Observation/{measurement_id}" ] ;
     rr:predicateObjectMap [ a                                 :Observation ;
                             :Resource.id                      [ :value [ rr:column "measurement_id" ] ] ;
@@ -204,12 +203,18 @@
                                                                                           rr:template "http://hl7.org/fhir/Coding/{value_as_concept_id}" ] ] ;
                             :Observation.valueString          [ :value [ rr:column   "value_as_number" ;
                                                                          rr:datatype xsd:string ] ] ;
-                            :Observation.valueQuantity        [ :Quantity.value [ :value [ rr:column "value_as_number" ] ] ;
-                                                                :Quantity.unit  [ :value [ rr:column "measurement_unit" ] ] ] ; ## done
                             :Observation.referenceRange       [ :Observation.referenceRange.low  [ :value [ rr:column "range_low" ] ] ;
                                                                 :Observation.referenceRange.high [ :value [ rr:column "range_high" ] ] ] ;
                             :Observation.performer            [ rr:termType rr:IRI ;
                                                                 rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ; # to be implemented
+                          ] .
+
+[] # measurement.unit_concept_id -> :Observation.valueQuantity
+    rr:logicalTable       [ rr:sqlQuery
+                                    "SELECT measurement.*, concept_name AS measurement_unit FROM measurement, concept WHERE measurement.unit_concept_id = concept.concept_id" ] ;
+    rr:subjectMap         [ rr:template "http://hl7.org/fhir/Observation/{measurement_id}" ] ;
+    rr:predicateObjectMap [ :Observation.valueQuantity        [ :Quantity.value [ :value [ rr:column "value_as_number" ] ] ;
+                                                                :Quantity.unit  [ :value [ rr:column "measurement_unit" ] ] ] ;
                           ] .
 
 
