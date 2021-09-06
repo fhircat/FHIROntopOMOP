@@ -229,3 +229,26 @@ SELECT * WHERE {
 } 
 LIMIT 100
 """
+
+[[tabGroups.tabs]]
+name="Distinct concepts for observations"
+query="""
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX fhir: <http://hl7.org/fhir/>
+
+SELECT DISTINCT ?concept_id ?code ?system ?display
+WHERE {
+?ob a fhir:Observation ;
+    fhir:Observation.subject ?patient ;
+    fhir:Observation.code	?concept_id .
+    ?concept_id    fhir:CodeableConcept.coding [
+        fhir:Coding.code    [ fhir:value    ?code    ];        
+        fhir:Coding.system  [ fhir:value    ?system  ];
+        fhir:Coding.display [ fhir:value    ?display ];        
+    ] 
+} 
+LIMIT 100
+"""
