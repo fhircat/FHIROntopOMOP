@@ -1,23 +1,25 @@
 version: "3.4"
 
 services:
-  ontop:    
-#    env_file: .env
-    image: ontop/ontop-endpoint:latest
-    restart: unless-stopped
+  ontop:
+    #    env_file: .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    image: ontop/ontop-endpoint:4.2-SNAPSHOT
+    #    restart: unless-stopped
     environment:
       ONTOP_ONTOLOGY_FILE: /opt/ontop/input/fhir.ttl
-#      ONTOP_XML_CATALOG_FILE: /opt/ontop/input/catalog-v001.xml
-      ONTOP_MAPPING_FILE: /opt/ontop/input/fhir.obda        
-      ONTOP_PROPERTIES_FILE: /opt/ontop/input/fhir.docker.properties
-      ONTOP_CONSTRAINT_FILE: /opt/ontop/input/fhir.db_prefs
-      ONTOP_PORTAL_FILE: /opt/ontop/input/fhir.portal.toml      
+      ONTOP_MAPPING_FILE: /opt/ontop/input/omop.obda
+      #      ONTOP_PROPERTIES_FILE: /opt/ontop/input/fhir.docker.properties
+      ONTOP_PORTAL_FILE: /opt/ontop/input/fhir.portal.toml
       ONTOP_CORS_ALLOWED_ORIGINS: "*"
-      ONTOP_DEV_MODE: "true"
+      #ONTOP_DEV_MODE: "true"
+      #ONTOP_DEBUG: "true"
+      ONTOP_DB_URL: ${ONTOP_DB_URL}
+      ONTOP_DB_USER: ${ONTOP_DB_USER}
+      ONTOP_DB_PASSWORD: ${ONTOP_DB_PASSWORD}
     volumes:
       - ./input:/opt/ontop/input
       - ./jdbc:/opt/ontop/jdbc
     ports:
       - "8080:8080"
-
-    
