@@ -88,19 +88,18 @@
 
 
 
-
 [] # visit_occurrence -> :Encounter
     rr:logicalTable       [ rr:tableName "visit_occurrence" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Encounter/{visit_occurrence_id}" ] ;
-    rr:predicateObjectMap [ a                  :Procedure ;
+    rr:predicateObjectMap [ a                  :Encounter ;
                             :Resource.id       [ :value [ rr:column "visit_occurrence_id" ] ] ;
                             :Encounter.status  [ :value "finished" ] ; ## to be implemented
                             :Encounter.type    [ rr:termType rr:IRI ;
-                                                rr:template "http://hl7.org/fhir/CodeableConcept/{visit_concept_id}"  ] ;
+                                                 rr:template "http://hl7.org/fhir/CodeableConcept/{visit_concept_id}" ] ;
                             :Encounter.class   [ rr:termType rr:IRI ;
-                                                rr:template "http://hl7.org/fhir/CodeableConcept/{visit_type_concept_id}"  ] ;
-                            :Encounter.subject [ rr:termType rr:IRI ;
-                                                 rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ;
+                                                 rr:template "http://hl7.org/fhir/CodeableConcept/{visit_type_concept_id}" ] ;
+                            :Encounter.subject [ :link [ rr:termType rr:IRI ;
+                                                         rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ] ;
                             :Encounter.period  [ :Period.start [ :value [ rr:column   "visit_start_datetime" ;
                                                                           rr:datatype xsd:dateTime ] ] ;
                                                  :Period.end   [ :value [ rr:column   "visit_end_datetime" ;
@@ -165,7 +164,7 @@
 [] # drug_exposure -> :MedicationStatement
     rr:logicalTable       [ rr:tableName "drug_exposure" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/MedicationStatement/{drug_exposure_id}" ] ;
-    rr:predicateObjectMap [ a                                              :Procedure ;
+    rr:predicateObjectMap [ a                                              :MedicationStatement ;
                             :Resource.id                                   [ :value [ rr:column "drug_exposure_id" ] ] ;
                             :MedicationStatement.status                    [ :value "completed" ] ; 
                             :MedicationStatement.statusReason              [ :value [ rr:column "stop_reason" ] ] ; ## expect codeableConcept but ... ## TODO: stop_reason is always NULL
