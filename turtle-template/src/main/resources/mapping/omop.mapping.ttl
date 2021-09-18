@@ -113,14 +113,14 @@
 [] # condition_occurrence -> :Condition
     rr:logicalTable       [ rr:tableName "condition_occurrence" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}" ] ;
-    rr:predicateObjectMap [ a                            :Condition ;
-                            :Resource.id                 [ :value [ rr:column "condition_occurrence_id" ] ] ;
-                             :Condition.code              [ rr:termType rr:IRI ;
-                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{condition_concept_id}" ] ;
-                            :Condition.category          [ rr:termType rr:IRI ;
-                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{condition_type_concept_id}" ] ;
-                            :Condition.subject           [ rr:termType rr:IRI ;
-                                                           rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ;
+    rr:predicateObjectMap [ a                   :Condition ;
+                            :Resource.id        [ :value [ rr:column "condition_occurrence_id" ] ] ;
+                            :Condition.code     [ rr:termType rr:IRI ;
+                                                  rr:template "http://hl7.org/fhir/CodeableConcept/{condition_concept_id}" ] ;
+                            :Condition.category [ rr:termType rr:IRI ;
+                                                  rr:template "http://hl7.org/fhir/CodeableConcept/{condition_type_concept_id}" ] ;
+                            :Condition.subject  [ :link [ rr:termType rr:IRI ;
+                                                          rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ; ] ;
                             :Condition.encounter         [ rr:termType rr:IRI ;
                                                            rr:template "http://hl7.org/fhir/Encounter/{visit_occurrence_id}" ] ;
                             :Condition.onsetDateTime     [ :value [ rr:column   "condition_start_datetime" ;
