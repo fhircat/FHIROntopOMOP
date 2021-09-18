@@ -39,9 +39,9 @@
 [] # provider -> :PractitionerRole
     rr:logicalTable       [ rr:tableName "provider" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/PractitionerRole/{provider_id}" ] ;
-    rr:predicateObjectMap [ a                              :PactitionerRole ;
+    rr:predicateObjectMap [ a                              :PractitionerRole ;
                             :Resource.id                   [ :value [ rr:column "provider_id" ] ] ;
-                            :PractitionerRole.speciality   [ rr:termType rr:IRI ;
+                            :PractitionerRole.specialty    [ rr:termType rr:IRI ;
                                                              rr:template "http://hl7.org/fhir/CodeableConcept/{specialty_concept_id}"  ] ;
                             :PractitionerRole.location     [ rr:template "http://hl7.org/fhir/Location/{care_site_id}" ] ; 
                             :PractitionerRole.practitioner [ rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ; ] .
