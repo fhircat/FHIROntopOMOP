@@ -7,8 +7,8 @@ public class OmopExample {
         String inputMappingFile;
         String outputMappingFile;
         if(args.length == 0){
-            inputMappingFile = "turtle-template/src/main/resources/mapping/omop.p100.mapping.ttl";
-            outputMappingFile = "input/omop.p100.obda";
+            inputMappingFile = "turtle-template/src/main/resources/mapping/omop.mapping.ttl";
+            outputMappingFile = "input/omop.obda";
         } else {
             inputMappingFile = args[0];
             outputMappingFile = args[1];

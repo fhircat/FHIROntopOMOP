@@ -92,45 +92,43 @@
 [] # visit_occurrence -> :Encounter
     rr:logicalTable       [ rr:sqlQuery  """SELECT * FROM visit_occurrence WHERE person_id >= 392775850 AND person_id <= 392775949""" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Encounter/{visit_occurrence_id}" ] ;
-    rr:predicateObjectMap [ a                  :Encounter ;
-                            :Resource.id       [ :value [ rr:column "visit_occurrence_id" ] ] ;
-                            :Encounter.status  [ :value "finished" ] ; ## to be implemented
-                            :Encounter.type    [ rr:termType rr:IRI ;
-                                                 rr:template "http://hl7.org/fhir/CodeableConcept/{visit_concept_id}" ] ;
-                            :Encounter.class   [ rr:termType rr:IRI ;
-                                                 rr:template "http://hl7.org/fhir/CodeableConcept/{visit_type_concept_id}" ] ;
-                            :Encounter.subject [ :link [ rr:termType rr:IRI ;
-                                                         rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ] ;
-                            :Encounter.period  [ :Period.start [ :value [ rr:column   "visit_start_datetime" ;
-                                                                          rr:datatype xsd:dateTime ] ] ;
-                                                 :Period.end   [ :value [ rr:column   "visit_end_datetime" ;
-                                                                            rr:datatype xsd:dateTime ] ] ] ; 
-                            :Encounter.performer [ rr:termType rr:IRI ; # FIXME: :Encounter.performer not in the FHIR ontology 
-                                                 rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ;                                       
-                            :Encounter.partOf    [ rr:termType rr:IRI ;
-                                                 rr:template "http://hl7.org/fhir/Encounter/{preceding_visit_occurrence_id}" ] ; # to be implemented
-                            ] .
+    rr:predicateObjectMap [ a                    :Encounter ;
+                            :Resource.id         [ :value [ rr:column "visit_occurrence_id" ] ] ;
+                            :Encounter.status    [ :value "finished" ] ; ## to be implemented
+                            :Encounter.type      [ rr:termType rr:IRI ;
+                                                   rr:template "http://hl7.org/fhir/CodeableConcept/{visit_concept_id}" ] ;
+                            :Encounter.class     [ rr:termType rr:IRI ;
+                                                   rr:template "http://hl7.org/fhir/CodeableConcept/{visit_type_concept_id}" ] ;
+                            :Encounter.subject   [ :link [ rr:termType rr:IRI ;
+                                                           rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ] ;
+                            :Encounter.period    [ :Period.start [ :value [ rr:column   "visit_start_datetime" ;
+                                                                            rr:datatype xsd:dateTime ] ] ;
+                                                   :Period.end   [ :value [ rr:column   "visit_end_datetime" ;
+                                                                            rr:datatype xsd:dateTime ] ] ] ;
+                            :Encounter.performer [ :link [ rr:termType rr:IRI ; # FIXME: :Encounter.performer not in the FHIR ontology 
+                                                           rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ] ;
+                            :Encounter.partOf    [ :link [ rr:termType rr:IRI ;
+                                                           rr:template "http://hl7.org/fhir/Encounter/{preceding_visit_occurrence_id}" ] ] ; ] .
 
 [] # condition_occurrence -> :Condition
     rr:logicalTable       [ rr:sqlQuery """SELECT * FROM condition_occurrence WHERE person_id >= 392775850 AND person_id <= 392775949""" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Condition/{condition_occurrence_id}" ] ;
-    rr:predicateObjectMap [ a                   :Condition ;
-                            :Resource.id        [ :value [ rr:column "condition_occurrence_id" ] ] ;
-                            :Condition.code     [ rr:termType rr:IRI ;
-                                                  rr:template "http://hl7.org/fhir/CodeableConcept/{condition_concept_id}" ] ;
-                            :Condition.category [ rr:termType rr:IRI ;
-                                                  rr:template "http://hl7.org/fhir/CodeableConcept/{condition_type_concept_id}" ] ;
-                            :Condition.subject  [ :link [ rr:termType rr:IRI ;
-                                                          rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ; ] ;
-                            :Condition.encounter         [ rr:termType rr:IRI ;
-                                                           rr:template "http://hl7.org/fhir/Encounter/{visit_occurrence_id}" ] ;
+    rr:predicateObjectMap [ a                            :Condition ;
+                            :Resource.id                 [ :value [ rr:column "condition_occurrence_id" ] ] ;
+                            :Condition.code              [ rr:termType rr:IRI ;
+                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{condition_concept_id}" ] ;
+                            :Condition.category          [ rr:termType rr:IRI ;
+                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{condition_type_concept_id}" ] ;
+                            :Condition.subject           [ :link [ rr:termType rr:IRI ;
+                                                                   rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ; ] ;
+                            :Condition.encounter         [ :link [ rr:termType rr:IRI ;
+                                                                   rr:template "http://hl7.org/fhir/Encounter/{visit_occurrence_id}" ] ] ;
                             :Condition.onsetDateTime     [ :value [ rr:column   "condition_start_datetime" ;
                                                                     rr:datatype xsd:dateTime ] ] ;
                             :Condition.abatementDateTime [ :value [ rr:column   "condition_end_datetime" ;
-                                                                    rr:datatype xsd:dateTime ] ] ; 
-                            :Condition.asserter           [ rr:termType rr:IRI ;
-                                                           rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ; # to be implemented
-                            ] .
+                                                                    rr:datatype xsd:dateTime ] ] ;
+                            :Condition.asserter          [ :link [ rr:termType rr:IRI ;
+                                                                   rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ] ; ] .
 
 
 [] # condition_occurrence -> :Condition
@@ -153,8 +151,8 @@
                                                            rr:template "http://hl7.org/fhir/CodeableConcept/{procedure_type_concept_id}" ] ;
                             :Procedure.subject           [ :link [ rr:termType rr:IRI ;
                                                                    rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ] ;
-                            :Procedure.encounter         [ rr:termType rr:IRI ;
-                                                           rr:template "http://hl7.org/fhir/Encounter/{visit_occurrence_id}" ] ;
+                            :Procedure.encounter         [ :link [ rr:termType rr:IRI ;
+                                                           rr:template "http://hl7.org/fhir/Encounter/{visit_occurrence_id}" ] ];
                             :Procedure.performedDateTime [ :value [ rr:column   "procedure_datetime" ;
                                                                     rr:datatype xsd:dateTime ] ] ;
                             :Procedure.performer         [ :link [ rr:termType rr:IRI ;
@@ -162,7 +160,7 @@
                           ] .
 
 [] # drug_exposure -> :MedicationStatement
-    rr:logicalTable       [ rr:sqlQuery """SELECT * FROM drug_exposure WHERE person_id >= 392775850 AND person_id <= 392775949""" ] ;
+    rr:logicalTable       [ rr:sqlQuery """SELECT * FROM drug_exposure""" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/MedicationStatement/{drug_exposure_id}" ] ;
     rr:predicateObjectMap [ a                                              :MedicationStatement ;
                             :Resource.id                                   [ :value [ rr:column "drug_exposure_id" ] ] ;
@@ -179,9 +177,8 @@
                             :MedicationStatement.effectivePeriod           [ :Period.start [ :value [ rr:column   "drug_exposure_start_datetime" ;
                                                                                                       rr:datatype xsd:dateTime ] ] ;
                                                                              :Period.end   [ :value [ rr:column   "drug_exposure_end_datetime" ;
-                                                                                                      rr:datatype xsd:dateTime ] ] ] ] .
-
-
+                                                                                                      rr:datatype xsd:dateTime ] ] ] 
+                          ] .
 
 [] # measurement -> :Observation
     rr:logicalTable       [ rr:sqlQuery """SELECT * FROM measurement WHERE person_id >= 392775850 AND person_id <= 392775949""" ] ;
@@ -194,12 +191,14 @@
                                                                 rr:template "http://hl7.org/fhir/CodeableConcept/{measurement_type_concept_id}" ] ;
                             :Observation.subject              [ :link [ rr:termType rr:IRI ;
                                                                 rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ];
-                            :Observation.encounter            [ rr:termType rr:IRI ;
-                                                                rr:template "http://hl7.org/fhir/Encounter/{visit_occurrence_id}" ] ;
+                            :Observation.encounter            [ :link [ rr:termType rr:IRI ;
+                                                                rr:template "http://hl7.org/fhir/Encounter/{visit_occurrence_id}" ] ];
                             :Observation.effectiveDateTime    [ :value [ rr:column   "measurement_datetime" ;
                                                                          rr:datatype xsd:dateTime ] ] ;
-                            :Observation.valueCodeableConcept [ :CodeableConcept.coding [ rr:termType rr:IRI ;
-                                                                                          rr:template "http://hl7.org/fhir/Coding/{value_as_concept_id}" ] ] ;
+                            :Observation.valueCodeableConcept [ rr:termType rr:IRI ;
+                                                                rr:template "http://hl7.org/fhir/CodeableConcept/{value_as_concept_id}" ] ;
+#                            :Observation.valueCodeableConcept [ :CodeableConcept.coding [ rr:termType rr:IRI ;
+#                                                                                          rr:template "http://hl7.org/fhir/Coding/{value_as_concept_id}" ] ] ;
                             :Observation.valueString          [ :value [ rr:column   "value_as_number" ;
                                                                          rr:datatype xsd:string ] ] ;
                             :Observation.referenceRange       [ :Observation.referenceRange.low  [ :value [ rr:column "range_low" ] ] ;
@@ -248,37 +247,37 @@
 #                                                      rr:datatype xsd:string ] ] ; ] .
 
 
-[ ] # concept_relationship -> :ConceptMap
-    rr:logicalTable       [ rr:tableName "concept_relationship" ] ;
-    rr:subjectMap         [ rr:template "http://hl7.org/fhir/ConceptMap/relations/{concept_id_1}/{concept_id_2}" ] ;
-    rr:predicateObjectMap [ a                                            :ConceptMap ;
-                            :Resource.id                                 [ :value [ rr:template "{concept_id_1}-{concept_id_2}" ; 
-                                                                                    rr:datatype xsd:string ] ] ;
-                            :ConceptMap.sourceUri                        [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id_1}" ] ;
-                            :ConceptMap.targetUri                        [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id_2}" ] ;
-                            :ConceptMap.group.source                     [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id_1}" ] ;
-                            :ConceptMap.group.target                     [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id_2}" ] ;
-                            :ConceptMap.group.element.target.equivalence [ :value [ rr:column   "relationship_id" ;
-                                                                                    rr:datatype xsd:string ] ] ; 
-                          ] .
-
-[ ] # concept_ancestor -> :ConceptMap
-    rr:logicalTable       [ rr:tableName "concept_ancestor" ] ;
-    rr:subjectMap         [ rr:template "http://hl7.org/fhir/ConceptMap/ancestors/{ancestor_concept_id}/{descendant_concept_id}" ] ;
-    rr:predicateObjectMap [ a                                            :ConceptMap ;
-                            :Resource.id                                 [ :value [ rr:template "{ancestor_concept_id}-{descendant_concept_id}" ; 
-                                                                                    rr:datatype xsd:string ] ] ;
-                            :ConceptMap.sourceUri                        [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{ancestor_concept_id}" ] ;
-                            :ConceptMap.targetUri                        [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{descendant_concept_id}" ] ;
-                            :ConceptMap.group.source                     [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{ancestor_concept_id}" ] ;
-                            :ConceptMap.group.target                     [ rr:termType rr:IRI ;
-                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{descendant_concept_id}" ] ;
-                            :ConceptMap.group.element.target.equivalence [ :value      "subsumes" ;
-                                                                           rr:datatype xsd:string ] ; ] .
+#[ ] # concept_relationship -> :ConceptMap
+#    rr:logicalTable       [ rr:tableName "concept_relationship" ] ;
+#    rr:subjectMap         [ rr:template "http://hl7.org/fhir/ConceptMap/relations/{concept_id_1}/{concept_id_2}" ] ;
+#    rr:predicateObjectMap [ a                                            :ConceptMap ;
+#                            :Resource.id                                 [ :value [ rr:template "{concept_id_1}-{concept_id_2}" ; 
+#                                                                                    rr:datatype xsd:string ] ] ;
+#                            :ConceptMap.sourceUri                        [ rr:termType rr:IRI ;
+#                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id_1}" ] ;
+#                            :ConceptMap.targetUri                        [ rr:termType rr:IRI ;
+#                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id_2}" ] ;
+#                            :ConceptMap.group.source                     [ rr:termType rr:IRI ;
+#                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id_1}" ] ;
+#                            :ConceptMap.group.target                     [ rr:termType rr:IRI ;
+#                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id_2}" ] ;
+#                            :ConceptMap.group.element.target.equivalence [ :value [ rr:column   "relationship_id" ;
+#                                                                                    rr:datatype xsd:string ] ] ; 
+#                          ] .
+#
+#[ ] # concept_ancestor -> :ConceptMap
+#    rr:logicalTable       [ rr:tableName "concept_ancestor" ] ;
+#    rr:subjectMap         [ rr:template "http://hl7.org/fhir/ConceptMap/ancestors/{ancestor_concept_id}/{descendant_concept_id}" ] ;
+#    rr:predicateObjectMap [ a                                            :ConceptMap ;
+#                            :Resource.id                                 [ :value [ rr:template "{ancestor_concept_id}-{descendant_concept_id}" ; 
+#                                                                                    rr:datatype xsd:string ] ] ;
+#                            :ConceptMap.sourceUri                        [ rr:termType rr:IRI ;
+#                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{ancestor_concept_id}" ] ;
+#                            :ConceptMap.targetUri                        [ rr:termType rr:IRI ;
+#                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{descendant_concept_id}" ] ;
+#                            :ConceptMap.group.source                     [ rr:termType rr:IRI ;
+#                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{ancestor_concept_id}" ] ;
+#                            :ConceptMap.group.target                     [ rr:termType rr:IRI ;
+#                                                                           rr:template "http://hl7.org/fhir/CodeableConcept/{descendant_concept_id}" ] ;
+#                            :ConceptMap.group.element.target.equivalence [ :value      "subsumes" ;
+#                                                                           rr:datatype xsd:string ] ; ] .
