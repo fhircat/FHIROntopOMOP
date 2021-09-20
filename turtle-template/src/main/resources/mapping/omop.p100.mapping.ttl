@@ -160,7 +160,7 @@
                           ] .
 
 [] # drug_exposure -> :MedicationStatement
-    rr:logicalTable       [ rr:sqlQuery """SELECT * FROM drug_exposure""" ] ;
+    rr:logicalTable       [ rr:sqlQuery """SELECT * FROM drug_exposure  WHERE person_id >= 392775850 AND person_id <= 392775949""" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/MedicationStatement/{drug_exposure_id}" ] ;
     rr:predicateObjectMap [ a                                              :MedicationStatement ;
                             :Resource.id                                   [ :value [ rr:column "drug_exposure_id" ] ] ;
