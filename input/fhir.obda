@@ -1,12 +1,22 @@
 [PrefixDeclaration]
 :		http://hl7.org/fhir/
+cs:		http://hl7.org/orim/codesystem/
+dc:		http://purl.org/dc/elements/1.1/
+dt:		http://hl7.org/orim/datatype/
+ex:		http://hl7.org/fhir/StructureDefinition/
+vs:		http://hl7.org/orim/valueset/
+w5:		http://hl7.org/fhir/w5#
 owl:		http://www.w3.org/2002/07/owl#
 rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+rim:		http://hl7.org/owl/rim/
 xml:		http://www.w3.org/XML/1998/namespace
 xsd:		http://www.w3.org/2001/XMLSchema#
 fhir:		http://hl7.org/fhir/
 obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
+loinc:		http://loinc.org/rdf#
+dcterms:		http://purl.org/dc/terms/
+fhir-vs:		http://hl7.org/fhir/ValueSet/
 
 [MappingDeclaration] @collection [[
 mappingId	Person-person_id

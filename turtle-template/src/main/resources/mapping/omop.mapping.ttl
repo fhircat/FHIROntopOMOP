@@ -15,8 +15,9 @@
                             :Patient.birthDate           [ :value [ rr:column   "birth_date" ;
                                                                     rr:datatype xsd:date ] ] ; # Using year_of_birth, month_of_birth, and day_of_birth
                             :Patient.address             [ rr:template "http://hl7.org/fhir/Location/{location_id}/Location.address" ] ; # how to handle NULL fields
-                            :Patient.generalPractitioner [ rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ;
-                            :Patient.generalPractitioner [ rr:template "http://hl7.org/fhir/PractitionerRole/{provider_id}" ] ; ] .
+                            :Patient.generalPractitioner [ :link [ rr:template "http://hl7.org/fhir/Practitioner/{provider_id}" ] ] ;
+                            :Patient.generalPractitioner [ :link [ rr:template "http://hl7.org/fhir/PractitionerRole/{provider_id}" ] ]; 
+                          ] .
 
 [] # provider -> :Practitioner
     rr:logicalTable       [ rr:sqlQuery "SELECT *, make_date(year_of_birth, 1, 1) AS birth_date FROM provider" ] ;
@@ -195,9 +196,7 @@
                             :Observation.effectiveDateTime    [ :value [ rr:column   "measurement_datetime" ;
                                                                          rr:datatype xsd:dateTime ] ] ;
                             :Observation.valueCodeableConcept [ rr:termType rr:IRI ;
-                                                                rr:template "http://hl7.org/fhir/CodeableConcept/{value_as_concept_id}" ] ;
-#                            :Observation.valueCodeableConcept [ :CodeableConcept.coding [ rr:termType rr:IRI ;
-#                                                                                          rr:template "http://hl7.org/fhir/Coding/{value_as_concept_id}" ] ] ;
+                                                                rr:template "http://hl7.org/fhir/CodeableConcept/{value_as_concept_id}" ] ;#                           
                             :Observation.valueString          [ :value [ rr:column   "value_as_number" ;
                                                                          rr:datatype xsd:string ] ] ;
                             :Observation.referenceRange       [ :Observation.referenceRange.low  [ :value [ rr:column "range_low" ] ] ;
@@ -208,8 +207,8 @@
 
 [] # measurement.unit_concept_id -> :Observation.valueQuantity
     rr:logicalTable       [ rr:sqlQuery
-                                    """SELECT measurement.*, concept_name AS measurement_unit FROM measurement, concept WHERE measurement.unit_concept_id = concept.concept_id
-                                    """ ] ;
+                                    """SELECT measurement.*, concept_name AS measurement_unit FROM measurement, concept 
+                                    WHERE measurement.unit_concept_id = concept.concept_id""" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Observation/{measurement_id}" ] ;
     rr:predicateObjectMap [ :Observation.valueQuantity        [ :Quantity.value [ :value [ rr:column "value_as_number" ] ] ;
                                                                 :Quantity.unit  [ :value [ rr:column "measurement_unit" ] ] ] ;
