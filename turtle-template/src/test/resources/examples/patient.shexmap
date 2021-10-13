@@ -1,0 +1,10 @@
+## Licensed under the terms of http://www.apache.org/licenses/LICENSE-2.0
+
+PREFIX fhir: <http://hl7.org/fhir/> 
+PREFIX fhirvs: <http://hl7.org/fhir/ValueSet/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+BASE <http://hl7.org/fhir/shape/>
+
+# Validate a simple nodeSelector/shapeLabel pair.
+<http://hl7.org/fhir/Patient/392775850> @ <Patient>
+

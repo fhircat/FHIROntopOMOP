@@ -1,0 +1,24 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix w5: <http://hl7.org/fhir/w5#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
+
+<http://hl7.org/fhir/Patient/392775850> a fhir:Patient ;
+                                        fhir:Resource.id <http://hl7.org/fhir/Patient/392775850/Resource.id> .
+
+<http://hl7.org/fhir/Patient/392775850/Resource.id> fhir:value "392775850" .
+
+<http://hl7.org/fhir/Patient/392775850> fhir:Patient.gender <http://hl7.org/fhir/Patient/392775850/Patient.gender> .
+
+<http://hl7.org/fhir/Patient/392775850/Patient.gender> fhir:value "female" .
+
+<http://hl7.org/fhir/Patient/392775850> fhir:Patient.birthDate <http://hl7.org/fhir/Patient/392775850/Patient.birthDate> .
+
+<http://hl7.org/fhir/Patient/392775850/Patient.birthDate> fhir:value "2075-03-13"^^xsd:date .
+
+
