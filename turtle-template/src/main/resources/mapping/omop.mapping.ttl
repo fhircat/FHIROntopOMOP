@@ -198,8 +198,6 @@
                             :Observation.effectiveDateTime    [ :value [ rr:column   "measurement_datetime" ;
                                                                          rr:datatype xsd:dateTime ] ] ;
                             :Observation.effectivePeriod      [ :Period.start [ :value [ rr:column   "measurement_datetime" ;
-                                                                             rr:datatype xsd:dateTime ] ];
-                                                                :Period.end   [ :value [ rr:column   "measurement_datetime" ;
                                                                              rr:datatype xsd:dateTime ] ] ] ;
                             :Observation.valueCodeableConcept [ rr:termType rr:IRI ;
                                                                 rr:template "http://hl7.org/fhir/CodeableConcept/{value_as_concept_id}" ] ;#                           
@@ -216,8 +214,8 @@
                                     """SELECT measurement.*, concept_name AS measurement_unit FROM measurement, concept 
                                     WHERE measurement.unit_concept_id = concept.concept_id""" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Observation/{measurement_id}" ] ;
-    rr:predicateObjectMap [ :Observation.valueQuantity        [ :Quantity.value [ :value [ rr:column "value_as_number" ] ] ;
-                                                                :Quantity.unit  [ :value [ rr:column "measurement_unit" ] ] ] ;
+    rr:predicateObjectMap [ :Observation.valueQuantity        [ :Quantity.value [ :value [ rr:column "value_as_number" ; rr:datatype xsd:decimal ] ] ;
+                                                                :Quantity.unit  [ :value [ rr:column "measurement_unit" ; rr:datatype xsd:string  ] ] ] ;
                           ] .
 
 
