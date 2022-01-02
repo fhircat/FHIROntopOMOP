@@ -187,6 +187,7 @@
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Observation/{measurement_id}" ] ;
     rr:predicateObjectMap [ a                                 :Observation ;
                             :Resource.id                      [ :value [ rr:column "measurement_id" ] ] ;
+                            :Observation.status               [ :value "final"];
                             :Observation.code                 [ rr:termType rr:IRI ;
                                                                 rr:template "http://hl7.org/fhir/CodeableConcept/{measurement_concept_id}" ] ;
                             :Observation.category             [ rr:termType rr:IRI ;
@@ -200,7 +201,7 @@
                             :Observation.effectivePeriod      [ :Period.start [ :value [ rr:column   "measurement_datetime" ;
                                                                              rr:datatype xsd:dateTime ] ] ] ;
                             :Observation.valueCodeableConcept [ rr:termType rr:IRI ;
-                                                                rr:template "http://hl7.org/fhir/CodeableConcept/{value_as_concept_id}" ] ;#                           
+                                                                rr:template "http://hl7.org/fhir/CodeableConcept/{value_as_concept_id}" ] ;                           
                             :Observation.valueString          [ :value [ rr:column   "value_as_number" ;
                                                                          rr:datatype xsd:string ] ] ;
                             :Observation.referenceRange       [ :Observation.referenceRange.low  [ :value [ rr:column "range_low" ] ] ;
