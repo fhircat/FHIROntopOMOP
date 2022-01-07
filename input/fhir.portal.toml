@@ -260,7 +260,7 @@ name="Evaluation Queries"
 [[tabGroups.tabs]]
 name="QUERY 1"
 query="""
-#--
+#--QUERY 1
 #--Query domain: Encounter and Demographics
 #--Query result: Male patients with inpatient admissions lasting >= 5 days
 
@@ -284,7 +284,7 @@ WHERE {
   FILTER (?gender = 'male')
   # FILTER (?type = 'IMP')
   BIND (ofn:daysBetween(?start, ?end) as ?diff)
-  # FILTER (?diff >= "2"^^xsd:integer)
+  FILTER (?diff >= "5"^^xsd:integer)
 } 
 LIMIT 100
 
