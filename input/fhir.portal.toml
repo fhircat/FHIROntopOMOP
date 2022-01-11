@@ -382,10 +382,6 @@ query="""
 #--Query domain: Drugs
 #--Query result: Patients taking an antidepressant
 #--Concept set: Descendants of the ATC classification “Antidepressant” (OMOP concept ID 21604686), limited to OMOP standard RxNorm codes. 
-#--QUERY 4
-#--Query domain: Drugs
-#--Query result: Patients taking an antidepressant
-#--Concept set: Descendants of the ATC classification “Antidepressant” (OMOP concept ID 21604686), limited to OMOP standard RxNorm codes. 
 
 prefix owl: <http://www.w3.org/2002/07/owl#> 
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
@@ -397,7 +393,7 @@ SELECT DISTINCT * #?patient ?medcode ?meddate
 WHERE {
   ?med fhir:MedicationStatement.subject / fhir:link ?patient .
   ?med fhir:MedicationStatement.medicationCodeableConcept ?med_concept. 
-  ?concept fhir:CodeableConcept.coding [  fhir:Coding.code    / fhir:value ?med_code   ;
+  ?med_concept fhir:CodeableConcept.coding [  fhir:Coding.code    / fhir:value ?med_code   ;
                                           fhir:Coding.display / fhir:value ?med_name   ;
                                           fhir:Coding.system  / fhir:value ?med_system ; ] .
   ?med fhir:MedicationStatement.effectiveDateTime / fhir:value ?med_date .
