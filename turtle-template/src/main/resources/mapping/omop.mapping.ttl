@@ -224,8 +224,6 @@
     rr:logicalTable       [ rr:tableName "concept" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id}" ] ;
     rr:predicateObjectMap [ a                       :CodeableConcept ;
-                            :Resource.id            [ :value [ rr:column   "concept_id" ;
-                                                               rr:datatype xsd:string ] ] ;
                             :CodeableConcept.coding [ a               :Coding ;
                                                       :Coding.code    [ :value [ rr:column   "concept_code" ;
                                                                                  rr:datatype xsd:string ] ] ;

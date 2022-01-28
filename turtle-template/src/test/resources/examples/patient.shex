@@ -5,11 +5,11 @@ BASE <http://hl7.org/fhir/shape/>
 
 start=@<Patient> AND {fhir:nodeRole [fhir:treeRoot]}
 
-<http://hl7.org/fhirpath/System.String> {
- fhir:value xsd:string ;
-}
+#<http://hl7.org/fhirpath/System.String> {
+# fhir:value xsd:string ;
+#}
 
-#<http://hl7.org/fhirpath/System.String> .
+<http://hl7.org/fhirpath/System.String> .
 <http://hl7.org/fhirpath/System.Integer> .
 <http://hl7.org/fhirpath/System.Date> .
 <http://hl7.org/fhirpath/System.Boolean> .
