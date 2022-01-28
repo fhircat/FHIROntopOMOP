@@ -11,8 +11,8 @@
     rr:predicateObjectMap [ a                            :Patient ;
                             :Resource.id                 [ :value [ rr:column "person_id" ] ] ;
                             :Patient.gender              [ :value [ rr:column "gender" ] ] ;
-                            :Patient.birthDate           [ :value [ rr:column   "birth_datetime" ;
-                                                                    rr:datatype xsd:dateTime ] ] ; # in FHIR, birthDate's datatype is xsd:date
+                            #:Patient.birthDate           [ :value [ rr:column   "birth_datetime" ;
+                            #                                        rr:datatype xsd:dateTime ] ] ; # in FHIR, birthDate's datatype is xsd:date
                             :Patient.birthDate           [ :value [ rr:column   "birth_date" ;
                                                                     rr:datatype xsd:date ] ] ; # Using year_of_birth, month_of_birth, and day_of_birth
                             :Patient.address             [ rr:template "http://hl7.org/fhir/Location/{location_id}/Location.address" ] ; # how to handle NULL fields
@@ -225,8 +225,6 @@
     rr:logicalTable       [ rr:tableName "concept" ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/CodeableConcept/{concept_id}" ] ;
     rr:predicateObjectMap [ a                       :CodeableConcept ;
-                            :Resource.id            [ :value [ rr:column   "concept_id" ;
-                                                               rr:datatype xsd:string ] ] ;
                             :CodeableConcept.coding [ a               :Coding ;
                                                       :Coding.code    [ :value [ rr:column   "concept_code" ;
                                                                                  rr:datatype xsd:string ] ] ;
