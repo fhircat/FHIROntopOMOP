@@ -5,6 +5,7 @@
 plugins {
     java
     `maven-publish`
+    application
 }
 
 repositories {
@@ -30,10 +31,15 @@ dependencies {
 group = "org.fhircat"
 version = "1"
 description = "turtle-template"
-java.sourceCompatibility = JavaVersion.VERSION_16
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 publishing {
     publications.create<MavenPublication>("maven") {
         from(components["java"])
     }
+}
+
+application {
+    mainClassName = "org.fhircat.mapping.PatientMappingGenerator"
+    //mainClassName = "examples.PatientMappingGenerator"
 }

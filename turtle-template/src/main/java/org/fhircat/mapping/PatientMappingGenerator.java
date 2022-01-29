@@ -1,4 +1,4 @@
-package examples;
+package org.fhircat.mapping;
 
 
 import java.io.BufferedWriter;
