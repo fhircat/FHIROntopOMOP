@@ -414,13 +414,13 @@ query="""
 #--Query result: Patients with an HbA1c >= 10%
 #--Concept set: Three LOINC codes for A1c tests (OMOP concept IDs 3005673,3004410,3003309)
 
-prefix owl: <http://www.w3.org/2002/07/owl#> 
-prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
-prefix sct: <http://snomed.info/id/> 
-prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX sct: <http://snomed.info/id/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
 PREFIX fhir: <http://hl7.org/fhir/>
 
-SELECT ?patient ?code ?result ?testdate
+SELECT DISTINCT ?patient ?code ?result ?year ?month ?day
 WHERE {
 	?meas fhir:Observation.subject / fhir:link ?patient .
 	?meas fhir:Observation.code / fhir:CodeableConcept.coding [ 
@@ -429,11 +429,15 @@ WHERE {
   ?meas fhir:Observation.valueQuantity / fhir:Quantity.value / fhir:value ?result .
   # ?meas fhir:Observation.effectiveDateTime / fhir:value ?testdate .
   ?meas fhir:Observation.effectivePeriod / fhir:Period.start / fhir:value ?testdate .
+  BIND(YEAR(?testdate) AS ?year)
+  BIND(MONTH(?testdate) AS ?month)
+  BIND(DAY(?testdate) AS ?day)  
   FILTER(?system = 'LOINC') 
   FILTER(?code = '17856-6' || ?code = '4548-4' || ?code = '4549-2')
   FILTER(?result >= 10)
 }
-LIMIT 100
+#LIMIT 100
+
 
 #SQL
 #
