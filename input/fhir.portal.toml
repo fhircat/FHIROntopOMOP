@@ -277,12 +277,12 @@ WHERE {
       	fhir:Period.start [ fhir:value ?start ]  ;
         fhir:Period.end   [ fhir:value ?end ] ] . 
   ?e fhir:Encounter.subject [ fhir:link ?patient ] .
-  ?e fhir:Encounter.class [fhir:CodeableConcept.coding [fhir:Coding.code [fhir:value ?type] ] ].
+  ?e fhir:Encounter.type [fhir:CodeableConcept.coding [fhir:Coding.code [fhir:value ?type] ] ].
   ?patient a fhir:Patient ;
 	 fhir:Patient.gender    [   fhir:value ?gender      ] ;
 	 fhir:Patient.birthDate [   fhir:value ?birthDate   ] .
   FILTER (?gender = 'male')
-  # FILTER (?type = 'IMP')
+  FILTER (?type = 'IP')
   BIND (ofn:daysBetween(?start, ?end) as ?diff)
   FILTER (?diff >= "5"^^xsd:integer)
 } 
