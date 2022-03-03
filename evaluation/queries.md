@@ -168,7 +168,7 @@ WHERE {
 - Query domain: Measurement
 - Query result: Patients with an HbA1c >= 10%
 - Concept set: Three LOINC codes for A1c tests (OMOP concept IDs 3005673,3004410,3003309)
-- Number of results: 
+- Number of results: 944
 
 ### SQL
 

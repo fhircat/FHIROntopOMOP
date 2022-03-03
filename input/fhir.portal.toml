@@ -435,8 +435,6 @@ WHERE {
   FILTER(?code = '17856-6' || ?code = '4548-4' || ?code = '4549-2')
   FILTER(?result >= 10)
 }
-#LIMIT 100
-
 
 #SQL
 #
