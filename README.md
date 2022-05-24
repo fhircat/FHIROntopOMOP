@@ -6,7 +6,7 @@ data as a queryable Knowledge Graph compliant with the [HL7 FHIR standard](https
 the [Ontop](https://ontop-vkg.org/)
 Virtual Knowledge Graph engine.
 
-## Perquisite: 
+## Prerequisite: 
 a working connection to the OMOP PostgreSQL database. If the database and the Docker engine are running on the same machine, some additional configuration might be needed (see the end of this document)   
 
 ## Docker-based Installation Instruction
@@ -41,3 +41,18 @@ host    all             all             172.18.0.0/16           md5
 host    all             all             172.19.0.0/16           md5
 ```
 
+## Docker run with sample data
+For this tutorial, we assume that the ports 7777 (used for database) and 8080 (used by Ontop) are free. If you need to use different ports, please edit the file ```.env.demo```.
+Run the docker-compose commands in 2 separate terminals.
+```
+cp .env.demo .env
+sudo docker-compose -f docker-compose.demo.yml up demo-db
+sudo docker-compose -f docker-compose.demo.yml up ontop
+```
+Data from a sample physionet project https://physionet.org/content/mimic-iv-demo-omop/0.9/ is run locally for this demo.
+
+References:
+
+Kallfelz, M., Tsvetkova, A., Pollard, T., Kwong, M., Lipori, G., Huser, V., Osborn, J., Hao, S., & Williams, A. (2021). MIMIC-IV demo data in the OMOP Common Data Model (version 0.9). PhysioNet. https://doi.org/10.13026/p1f5-7x35.
+
+Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220.
