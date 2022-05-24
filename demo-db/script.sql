@@ -738,3 +738,13 @@ CREATE TABLE concept_ancestor (
                                   ancestor_concept_id BIGINT,
                                   descendant_concept_id BIGINT
 );
+
+-- Add concepts for Geneder
+INSERT INTO
+    concept ("concept_id","concept_name","domain_id","vocabulary_id","concept_class_id","standard_concept","concept_code","valid_start_date","valid_end_date","invalid_reason")
+VALUES
+('8507','MALE','Gender','Gender','Gender','S','M','1970-01-01','2099-12-31',''),
+('8521','OTHER','Gender','Gender','Gender','','O','1970-01-01','2014-07-31','D'),
+('8532','FEMALE','Gender','Gender','Gender','S','F','1970-01-01','2099-12-31',''),
+('8551','UNKNOWN','Gender','Gender','Gender','','U','1970-01-01','2014-07-31','D'),
+('8570','AMBIGUOUS','Gender','Gender','Gender','','A','1970-01-01','2014-07-31','D');

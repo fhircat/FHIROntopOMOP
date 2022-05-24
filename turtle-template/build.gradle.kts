@@ -31,7 +31,7 @@ dependencies {
 group = "org.fhircat"
 version = "1"
 description = "turtle-template"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_16
 
 publishing {
     publications.create<MavenPublication>("maven") {

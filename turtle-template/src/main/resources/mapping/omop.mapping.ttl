@@ -3,7 +3,10 @@
 @prefix rr:     <http://www.w3.org/ns/r2rml#>.
 
 [] # person -> :Patient
-    rr:logicalTable       [ rr:sqlQuery '''SELECT person.*, make_date(year_of_birth, month_of_birth, day_of_birth) AS birth_date, 
+    rr:logicalTable       [ rr:sqlQuery '''SELECT person.*, make_date(
+                                                                   CASE WHEN person.year_of_birth IS NULL THEN 1 ELSE year_of_birth END,
+                                                                   CASE WHEN person.month_of_birth IS NULL THEN 1 ELSE month_of_birth END,
+                                                                   CASE WHEN person.day_of_birth IS NULL THEN 1 ELSE day_of_birth END) AS birth_date, 
     LOWER(concept_name) AS gender FROM person, concept 
     WHERE person.gender_concept_id = concept.concept_id''' ] ;
     rr:subjectMap         [ rr:template "http://hl7.org/fhir/Patient/{person_id}" ] ;
