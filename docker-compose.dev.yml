@@ -5,11 +5,12 @@ services:
     #    env_file: .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    image: ontop/ontop-endpoint:4.3.0-SNAPSHOT
+    image: ontop/ontop:5.1.0
     #    restart: unless-stopped
     environment:
       ONTOP_ONTOLOGY_FILE: /opt/ontop/input/fhir.ttl
       ONTOP_MAPPING_FILE: /opt/ontop/input/omop.obda
+      ONTOP_XML_CATALOG_FILE: /opt/ontop/input/catalog-v001.xml
       #      ONTOP_PROPERTIES_FILE: /opt/ontop/input/fhir.docker.properties
       ONTOP_PORTAL_FILE: /opt/ontop/input/fhir.portal.toml
       ONTOP_CORS_ALLOWED_ORIGINS: "*"
